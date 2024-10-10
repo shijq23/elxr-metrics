@@ -1,15 +1,59 @@
-# This file is a template, and might need editing before it works on your project.
-# Full project: https://gitlab.com/pages/plain-html
-
-image: busybox
-
+---
 pages:
   stage: deploy
+  image: python:slim
+  tags:
+    - S3
+  before_script:
+    - python --version ; pip --version
+    - apt update && apt install -y --no-install-recommends awscli git
+    - pip install flit
+    - flit install --deps production
+
   script:
+    - set -x
     - echo "The site will be deployed to $CI_PAGES_URL"
+    # Copy all existing log files from metrics bucket to local
+    - mkdir -p logs/elxr_org
+    - aws s3 cp --recursive s3://${ELXR_METRICS_BUCKET}/elxr_org/ logs/elxr_org --exclude "*" --include "*.gz"
+    - mkdir logs/mirror_elxr_dev
+    - aws s3 cp --recursive s3://${ELXR_METRICS_BUCKET}/mirror_elxr_dev/ logs/mirror_elxr_dev --exclude "*" --include "*.gz"
+    # Bootstrap csv files
+    # - aws s3 sync s3://${S3_BUCKET}/metrics/ public/ --exclude "*" --include "*.csv"
+    - aws s3 sync s3://${ELXR_METRICS_BUCKET}/metrics/ public/ --exclude "*" --include "*.csv"
+    # Process log files
+    - elxr-metrics logs/elxr_org/ public/elxr_org_view.csv elxr_org_view
+    - elxr-metrics logs/mirror_elxr_dev/ public/package_stats.csv package_download
+    # Remove processed log files from metrics bucket
+    - pushd logs
+    - for f in $(ls elxr_org/*.gz); do aws s3 rm s3://${ELXR_METRICS_BUCKET}/$f; done
+    - for f in $(ls mirror_elxr_dev/*.gz); do aws s3 rm s3://${ELXR_METRICS_BUCKET}/$f; done
+    - popd
+    # Copy files to the S3 bucket
+    #- aws s3 sync --dryrun public/ s3://${S3_BUCKET}/metrics/ --delete
+    - aws s3 sync public/ s3://${ELXR_METRICS_BUCKET}/metrics/ --delete
+    # Invalidate to ensure CloudFront isn't serving cached content
+    - aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION} --path '/metrics/*' > /dev/null
+    # Push back to gitlab repo
+    - git config --global user.email "$GITLAB_USER_EMAIL"
+    - git config --global user.name "$GITLAB_USER_NAME"
+    - git remote set-url --push origin "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+    - git add public/*.csv
+    - 'git commit -m "CI: apply changes from pipeline $CI_PIPELINE_ID"'
+    - cid=$(git rev-parse HEAD)
+    - git fetch origin
+    - git reset --hard origin/$CI_COMMIT_REF_NAME
+    - git cherry-pick $cid
+    - git push origin --push-option="ci.skip" HEAD:$CI_COMMIT_REF_NAME
   artifacts:
     paths:
       - public
     expire_in: 30 day
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    # - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_REF_PROTECTED == "true" && $CI_COMMIT_BRANCH == "ci"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always
+
+variables:
+  FLIT_ROOT_INSTALL: 1

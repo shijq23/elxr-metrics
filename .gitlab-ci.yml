@@ -15,8 +15,9 @@ stages:
 
 # Cache to speed up subsequent jobs
 cache:
-  paths:
-    - .cache/pip
+  - key: $CI_COMMIT_REF_SLUG
+    paths:
+      - .cache/pip
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"

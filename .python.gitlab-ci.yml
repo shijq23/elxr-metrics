@@ -1,14 +1,16 @@
 ---
-.python-setup: &python-setup
+.python-setup:
   image: python:slim
   before_script:
     - python --version ; pip --version
     - apt-get update && apt-get install -y --no-install-recommends git
     - pip install flit
     - flit install --only-deps --deps develop
+  rules:
+    - if: $CI_PIPELINE_SOURCE != "schedule"
 
 python-test:
-  <<: *python-setup
+  extends: .python-setup
   stage: test
   script:
     - pytest
@@ -22,14 +24,14 @@ python-test:
         path: coverage.xml
 
 python-lint:
-  <<: *python-setup
+  extends: .python-setup
   stage: lint
   script:
     - git init
     - pre-commit run --all-files
 
 python-build:
-  <<: *python-setup
+  extends: .python-setup
   stage: build
   script:
     - flit build --no-use-vcs
