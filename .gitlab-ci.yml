@@ -2,9 +2,9 @@
 # Full project: https://gitlab.com/pages/plain-html
 
 include:
-  - template: Jobs/Secret-Detection.gitlab-ci.yml
-  - template: SAST.gitlab-ci.yml
-  - local: .python.gitlab-ci.yml
+  #- template: Jobs/Secret-Detection.gitlab-ci.yml
+  #- template: SAST.gitlab-ci.yml
+  #- local: .python.gitlab-ci.yml
   - local: .pages.gitlab-ci.yml
 
 stages:
