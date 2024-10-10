@@ -20,4 +20,4 @@ cache:
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-  SAST_EXCLUDED_PATHS: venv/,log/
+  SAST_EXCLUDED_PATHS: venv/,logs/
