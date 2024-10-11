@@ -26,9 +26,8 @@ pages:
     - for f in $(ls elxr_org/*.gz); do aws s3 rm s3://${ELXR_METRICS_BUCKET}/$f; done
     - for f in $(ls mirror_elxr_dev/*.gz); do aws s3 rm s3://${ELXR_METRICS_BUCKET}/$f; done
     - popd
-    # Copy files to the S3 bucket
-    #- aws s3 sync --dryrun public/ s3://${S3_BUCKET}/metrics/ --delete
-    - aws s3 sync public/ s3://${ELXR_METRICS_BUCKET}/metrics/ --delete
+    # Copy files to the elxr_org S3 bucket
+    - aws s3 sync public/ s3://${S3_BUCKET}/metrics/ --delete
     # Invalidate to ensure CloudFront isn't serving cached content
     - aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION} --path '/metrics/*' > /dev/null
     # Push back to gitlab repo
