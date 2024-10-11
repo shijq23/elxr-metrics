@@ -1,0 +1,193 @@
+const dateRangeSelect = document.getElementById('date-range');
+const customDateRangeDiv = document.getElementById('custom-date-range')
+const startDateInput = document.getElementById('start-date');
+const endDateInput = document.getElementById('end-date');
+const chartCanvas = document.getElementById('my-chart');
+const chartCanvas2 = document.getElementById('my-chart-2');
+
+let chartData = [];
+let pieData = []
+let viewChart;
+let viewChartPie;
+
+// Fetch CSV data on page load
+window.addEventListener('load', () => {
+    fetch('elxr_org_view.csv')
+        .then(response => response.text())
+        .then(csvData => {
+            chartData = parseCSV(csvData);
+            dateRangeSelect.selectedIndex = 2;
+            dateRangeSelect.dispatchEvent(new Event('change'));
+        })
+        .catch(error => {
+            console.error('Error fetching CSV data:', error);
+        });
+});
+
+window.addEventListener('load', () => {
+    fetch('package_top_10.csv')
+        .then(response => response.text())
+        .then(csvData => {
+            pieData = parseCSV(csvData);
+            drawPieChart(pieData);
+        })
+        .catch(error => {
+            console.error('Error fetching CSV data:', error);
+        });
+});
+
+function rangeChange() {
+    if (startDateInput.value != '' && endDateInput.value != '') {
+        startDate = new Date(startDateInput.value);
+        endDate = new Date(endDateInput.value);
+        // Filter the data based on the date range
+        filteredData = chartData.filter(item => {
+            const itemDate = new Date(item.TimeBucket);
+            return itemDate >= startDate && itemDate <= endDate;
+        });
+
+        drawChart(filteredData);
+    }
+}
+
+startDateInput.addEventListener('change', rangeChange);
+endDateInput.addEventListener('change', rangeChange);
+
+dateRangeSelect.addEventListener('change', () => {
+    const selectedRange = dateRangeSelect.value;
+    const today = new Date();
+
+    if (selectedRange === 'custom') {
+        customDateRangeDiv.style.display = 'block';
+    } else {
+        customDateRangeDiv.style.display = 'none';
+    }
+    switch (selectedRange) {
+        case '24h':
+            const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+            startDateInput.value = yesterday.toISOString().slice(0, 10);
+            endDateInput.value = today.toISOString().slice(0, 10);
+            break;
+        case '1w':
+            const aWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+            startDateInput.value = aWeekAgo.toISOString().slice(0, 10);
+            endDateInput.value = today.toISOString().slice(0, 10);
+            break;
+        case '1m':
+            const aMonthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+            startDateInput.value = aMonthAgo.toISOString().slice(0, 10);
+            endDateInput.value = today.toISOString().slice(0, 10);
+            break;
+        case 'custom':
+            // Clear the input fields
+            //startDateInput.value = '';
+            //endDateInput.value = '';
+            //customDateRangeDiv.style.display = 'block';
+            break;
+    }
+    rangeChange();
+});
+
+function drawChart(data) {
+    const ctx = chartCanvas.getContext('2d');
+    if (viewChart) {
+        viewChart.destroy();  // Destroy existing chart to prevent duplication
+    }
+    viewChart = new Chart(ctx, {
+        type: 'line', // Adjust the chart type as needed
+        data: {
+            labels: data.map(item => item.TimeBucket),
+            datasets: [{
+                label: 'View Count',
+                data: data.map(item => item.ViewCount),
+                borderColor: 'blue',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Time (UTC)'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'View Count'
+                    }
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'eLxr Site View Count'
+                },
+                legend: {
+                    display: false,
+                    position: 'top',
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
+            }
+        }
+    });
+}
+
+function drawPieChart(data) {
+    const ctx = chartCanvas2.getContext('2d');
+    if (viewChartPie) {
+        viewChartPie.destroy();  // Destroy existing chart to prevent duplication
+    }
+    viewChartPie = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: data.map(item => item.Name),
+            datasets: [{
+                label: 'Download Count',
+                data: data.map(item => item.Download),
+
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Top 10 Most Download Packages'
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                }
+            },
+        }
+    });
+}
+
+function parseCSV(csvData) {
+    const normalized = csvData.replace(/\r\n|\r/g, '\n');
+    const lines = normalized.split('\n');
+    const headers = lines[0].split(',');
+    const dataArray = [];
+    for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',');
+        const item = {};
+        for (let j = 0; j < headers.length; j++) {
+            item[headers[j]] = values[j];
+        }
+        dataArray.push(item);
+    }
+    return dataArray;
+}

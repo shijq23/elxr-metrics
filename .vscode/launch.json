@@ -1,0 +1,45 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "elxr org view",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "elxr_metrics",
+            "args": [
+                "logs/elxr_org/",
+                "public/elxr_org_view.csv",
+                "elxr_org_view"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "mirror elxr dev",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "elxr_metrics",
+            "args": [
+                "logs/mirror_elxr_dev/",
+                "public/package_stats.csv",
+                "package_download"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Debug Tests",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "purpose": [
+                "debug-test"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "PYTEST_ADDOPTS": "--no-cov -n0 --dist no"
+            }
+        }
+    ]
+}

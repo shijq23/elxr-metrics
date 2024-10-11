@@ -1,0 +1,102 @@
+/* style.css */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 40px;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#date-range-selector {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#date-range-selector label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+#date-range {
+  padding: 5px;
+  font-size: 16px;
+  margin-right: 20px;
+}
+
+#custom-date-range {
+  margin-top: 10px;
+}
+
+#custom-date-range label {
+  margin-right: 5px;
+}
+
+#custom-date-range input {
+  padding: 5px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+#applyCustomRange {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+#chart-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+#chart-container-2 {
+  width: 70%;
+  max-width: 700px;
+  margin: auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#loading {
+  text-align: center;
+  font-style: italic;
+  color: #555;
+  margin-top: 20px;
+}
+
+#errorMessage {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+a[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #000;
+  color: #fff;
+  padding: 5px;
+  border-radius: 3px;
+  z-index: 1;
+}
+
+#view-download {
+  padding: 5px;
+  /*font-size: 14px;
+  margin-right: 10px;*/
+}
