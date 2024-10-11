@@ -51,7 +51,7 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
     finally:
         conn.execute(
             f"""
-            COPY (SELECT * FROM trend WHERE TimeBucket + INTERVAL 32 DAY > CURRENT_TIMESTAMP ORDER BY TimeBucket ASC)
+            COPY (SELECT * FROM trend WHERE TimeBucket + INTERVAL 732 DAY > CURRENT_TIMESTAMP ORDER BY TimeBucket ASC)
             TO '{csv_file}'
             WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');"""
         )
