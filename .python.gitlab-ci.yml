@@ -6,6 +6,8 @@
     - apt-get update && apt-get install -y --no-install-recommends git
     - pip install flit
     - flit install --only-deps --deps develop
+  rules:
+    - if: $CI_PIPELINE_SOURCE != "schedule"
 
 python-test:
   extends: .python-setup

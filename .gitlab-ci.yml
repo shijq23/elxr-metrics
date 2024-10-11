@@ -2,9 +2,9 @@
 # Full project: https://gitlab.com/pages/plain-html
 
 include:
-  #- template: Jobs/Secret-Detection.gitlab-ci.yml
-  #- template: SAST.gitlab-ci.yml
-  #- local: .python.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+  - template: SAST.gitlab-ci.yml
+  - local: .python.gitlab-ci.yml
   - local: .pages.gitlab-ci.yml
 
 stages:
@@ -15,8 +15,9 @@ stages:
 
 # Cache to speed up subsequent jobs
 cache:
-  paths:
-    - .cache/pip
+  - key: $CI_COMMIT_REF_SLUG
+    paths:
+      - .cache/pip
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
