@@ -97,12 +97,22 @@ function drawChart(data) {
         type: 'line', // Adjust the chart type as needed
         data: {
             labels: data.map(item => item.TimeBucket),
-            datasets: [{
-                label: 'View Count',
-                data: data.map(item => item.ViewCount),
-                borderColor: 'blue',
-                fill: false
-            }]
+            datasets: [
+                {
+                    label: 'View Count',
+                    data: data.map(item => item.ViewCount),
+                    borderColor: 'skyblue',
+                    fill: false,
+                    yAxisID: 'y',
+                },
+                {
+                    label: 'Unique User',
+                    data: data.map(item => item.UniqueUser),
+                    borderColor: 'coral',
+                    fill: false,
+                    yAxisID: 'y1',
+                },
+            ]
         },
         options: {
             responsive: true,
@@ -114,12 +124,28 @@ function drawChart(data) {
                     }
                 },
                 y: {
+                    type: 'linear',
+                    position: 'left',
+                    display: true,
                     beginAtZero: true,
                     title: {
                         display: true,
                         text: 'View Count'
                     }
-                }
+                },
+                y1: {
+                    type: 'linear',
+                    position: 'right',
+                    display: true,
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Unique User'
+                    },
+                    grid: {
+                        drawOnChartArea: false,
+                    },
+                },
             },
             plugins: {
                 title: {
@@ -127,7 +153,7 @@ function drawChart(data) {
                     text: 'eLxr Site View Count'
                 },
                 legend: {
-                    display: false,
+                    display: true,
                     position: 'top',
                 },
                 tooltip: {

@@ -18,9 +18,6 @@ pages:
     - aws s3 cp --recursive s3://${ELXR_METRICS_BUCKET}/elxr_org/ logs/elxr_org --exclude "*" --include "*.gz"
     - mkdir logs/mirror_elxr_dev
     - aws s3 cp --recursive s3://${ELXR_METRICS_BUCKET}/mirror_elxr_dev/ logs/mirror_elxr_dev --exclude "*" --include "*.gz"
-    # Bootstrap csv files
-    # - aws s3 sync s3://${S3_BUCKET}/metrics/ public/ --exclude "*" --include "*.csv"
-    - aws s3 sync s3://${ELXR_METRICS_BUCKET}/metrics/ public/ --exclude "*" --include "*.csv"
     # Process log files
     - elxr-metrics logs/elxr_org/ public/elxr_org_view.csv elxr_org_view
     - elxr-metrics logs/mirror_elxr_dev/ public/package_stats.csv package_download

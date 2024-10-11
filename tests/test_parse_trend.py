@@ -20,16 +20,16 @@ def test_parse_trend(tmp_path):
     csv_file = tmp_path / "elxr_org_view.csv"
     parse_elxr_org_logs(path, csv_file)
     expected = [
-        (datetime.datetime(2074, 9, 22, 18, 0), 3),
-        (datetime.datetime(2074, 9, 25, 18, 0), 3),
+        (datetime.datetime(2074, 9, 22, 18, 0), 3, 2),
+        (datetime.datetime(2074, 9, 25, 18, 0), 3, 2),
     ]
     actual = duckdb.read_csv(csv_file).fetchall()
     assert set(expected) <= set(actual)
 
     parse_elxr_org_logs(path, csv_file)
     expected = [
-        (datetime.datetime(2074, 9, 22, 18, 0), 6),
-        (datetime.datetime(2074, 9, 25, 18, 0), 6),
+        (datetime.datetime(2074, 9, 22, 18, 0), 6, 4),
+        (datetime.datetime(2074, 9, 25, 18, 0), 6, 4),
     ]
     actual = duckdb.read_csv(csv_file).fetchall()
     assert set(expected) <= set(actual)
