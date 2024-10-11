@@ -1,1 +1,11 @@
 Name,Download
+wget,756
+zlib1g,734
+base-files,692
+zlib1g-dev,585
+python-apt-common,569
+python3-apt,565
+python3-apt-ostree,519
+linux-libc-dev,407
+uefi-ext4,406
+grub-common,371
