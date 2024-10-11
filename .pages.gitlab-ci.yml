@@ -38,13 +38,19 @@ pages:
     - git config --global user.email "$GITLAB_USER_EMAIL"
     - git config --global user.name "$GITLAB_USER_NAME"
     - git remote set-url --push origin "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
-    - git add public/*.csv
-    - 'git commit -m "CI: apply changes from pipeline $CI_PIPELINE_ID"'
-    - cid=$(git rev-parse HEAD)
-    - git fetch origin
-    - git reset --hard origin/$CI_COMMIT_REF_NAME
-    - git cherry-pick $cid
-    - git push origin --push-option="ci.skip" HEAD:$CI_COMMIT_REF_NAME
+    - |
+      if ! git diff --quiet public/*.csv; then
+        git add public/*.csv;
+        git commit -m "CI: apply changes from pipeline $CI_PIPELINE_ID";
+        cid=$(git rev-parse HEAD);
+        git fetch origin;
+        git reset --hard origin/$CI_COMMIT_REF_NAME;
+        git cherry-pick $cid;
+        git push origin --push-option="ci.skip" HEAD:$CI_COMMIT_REF_NAME;
+      else
+        echo "No changes to commit. Skipping push.";
+      fi
+
   artifacts:
     paths:
       - public

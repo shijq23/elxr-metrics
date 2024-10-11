@@ -6,9 +6,9 @@ const chartCanvas = document.getElementById('my-chart');
 const chartCanvas2 = document.getElementById('my-chart-2');
 
 let chartData = [];
-let pieData = []
+let top10Data = []
 let viewChart;
-let viewChartPie;
+let viewChartTop10;
 
 // Fetch CSV data on page load
 window.addEventListener('load', () => {
@@ -28,8 +28,8 @@ window.addEventListener('load', () => {
     fetch('package_top_10.csv')
         .then(response => response.text())
         .then(csvData => {
-            pieData = parseCSV(csvData);
-            drawPieChart(pieData);
+            top10Data = parseCSV(csvData);
+            drawTop10Chart(top10Data);
         })
         .catch(error => {
             console.error('Error fetching CSV data:', error);
@@ -144,19 +144,42 @@ function drawChart(data) {
     });
 }
 
-function drawPieChart(data) {
+function drawTop10Chart(data) {
     const ctx = chartCanvas2.getContext('2d');
-    if (viewChartPie) {
-        viewChartPie.destroy();  // Destroy existing chart to prevent duplication
+    if (viewChartTop10) {
+        viewChartTop10.destroy();  // Destroy existing chart to prevent duplication
     }
-    viewChartPie = new Chart(ctx, {
-        type: 'doughnut',
+    viewChartTop10 = new Chart(ctx, {
+        type: 'bar',
         data: {
             labels: data.map(item => item.Name),
             datasets: [{
-                label: 'Download Count',
                 data: data.map(item => item.Download),
-
+                backgroundColor: [
+                    'skyblue',
+                    'coral',
+                    'mediumseagreen',
+                    'salmon',
+                    'teal',
+                    'lightcoral',
+                    'khaki',
+                    'plum',
+                    'steelblue',
+                    'gold'
+                ],
+                borderColor: [
+                    'deepskyblue',
+                    'tomato',
+                    'seagreen',
+                    'darksalmon',
+                    'darkcyan',
+                    'indianred',
+                    'darkkhaki',
+                    'mediumorchid',
+                    'darkslateblue',
+                    'goldenrod'
+                ],
+                borderWidth: 1,
                 hoverOffset: 4
             }]
         },
@@ -168,7 +191,7 @@ function drawPieChart(data) {
                     text: 'Top 10 Most Download Packages'
                 },
                 legend: {
-                    display: true,
+                    display: false,
                     position: 'right',
                 }
             },
