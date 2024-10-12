@@ -26,11 +26,20 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
     conn = duckdb.connect(":memory:")
     try:
         conn.execute("""DROP TABLE IF EXISTS trend;""")
+        conn.execute("""DROP TABLE IF EXISTS temp_data;""")
         conn.execute(
             """
             CREATE TABLE IF NOT EXISTS trend (
             TimeBucket TIMESTAMP PRIMARY KEY,
-            ViewCount INTEGER
+            ViewCount INTEGER,
+            UniqueUser INTEGER
+        );"""
+        )
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS temp_data (
+            TimeBucket TIMESTAMP,
+            ClientIP VARCHAR
         );"""
         )
         if not csv_file.exists():
@@ -58,16 +67,32 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
         conn.close()
 
 
-def _update_elxr_org(conn: DuckDBPyConnection, log_entry: CloudFrontLogEntry) -> None:
+def _merge_elxr_org(conn: DuckDBPyConnection) -> None:
+    """merge collected temp data into trend table"""
+    conn.execute(
+        """
+        INSERT INTO trend (TimeBucket, ViewCount, UniqueUser)
+        SELECT
+            TimeBucket,
+            COUNT(*) AS ViewCount,
+            COUNT(DISTINCT ClientIP) AS UniqueUser
+        FROM temp_data
+        GROUP BY TimeBucket
+        ON CONFLICT (TimeBucket)
+        DO UPDATE SET
+            ViewCount = ViewCount + EXCLUDED.ViewCount,
+            UniqueUser = UniqueUser + EXCLUDED.UniqueUser;
+        """
+    )
+
+
+def _process_log_entry(conn: DuckDBPyConnection, log_entry: CloudFrontLogEntry) -> None:
+    """process the log entry and insert into temp table"""
     if log_entry.sc_content_type != "text/html":  # only count web page reviews
         return
     t = webpage_timebucket(log_entry.timestamp)
     ts = t.strftime(r"%Y-%m-%d %H:%M:%S")
-    conn.execute(
-        f" \
-        INSERT INTO trend (TimeBucket, ViewCount) values ('{ts}', 1) \
-        ON CONFLICT (TimeBucket) DO UPDATE SET ViewCount = trend.ViewCount + 1; "
-    )
+    conn.execute(f"INSERT INTO temp_data (TimeBucket, ClientIP) values ('{ts}', '{log_entry.c_ip}');")
 
 
 @timing
@@ -87,5 +112,6 @@ def parse_elxr_org_logs(log_folder: Path, csv_file: Path = ELXR_ORG_VIEW_CSV):
         conn.execute("BEGIN TRANSACTION;")
         for child in log_folder.glob("*.gz"):
             for entry in parse_cloudfront_log(child):
-                _update_elxr_org(conn, entry)
+                _process_log_entry(conn, entry)
+        _merge_elxr_org(conn)
         conn.execute("COMMIT;")
