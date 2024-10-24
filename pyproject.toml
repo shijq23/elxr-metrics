@@ -39,7 +39,6 @@ test = [
     "pytest-runner",
     "pytest-xdist",
     "pytest",
-    "pytest-github-actions-annotate-failures",
     "ruff",
     "shellcheck-py",
 ]
@@ -48,9 +47,9 @@ test = [
 elxr-metrics = "elxr_metrics.__main__:main"
 
 [project.urls]
-Documentation = "https://gitlab.com/jq_wr/metrics/-/blob/master/README.md"
-Source = "https://gitlab.com/jq_wr/metrics"
-Tracker = "https://gitlab.com/jq_wr/metrics/-/issues"
+Documentation = "https://gitlab.com/elxr/website/elxr-metrics/-/blob/main/README.md"
+Source = "https://gitlab.com/elxr/website/elxr-metrics"
+Tracker = "https://gitlab.com/elxr/website/elxr-metrics/-/issues"
 
 [tool.flit.module]
 name = "elxr_metrics"
@@ -134,7 +133,6 @@ markers = [
     "integration: marks as integration test",
     "notebooks: marks as notebook test",
     "gpu: marks as gpu test",
-    "spark: marks tests which need Spark",
     "slow: marks tests as slow",
     "unit: fast offline tests",
 ]
@@ -144,36 +142,6 @@ line-length = 120
 indent-width = 4
 
 target-version = "py310"
-
-[tool.tox]
-legacy_tox_ini = """
-[tox]
-envlist = py, integration, spark, all
-
-[testenv]
-commands =
-    pytest -m "not integration and not spark" {posargs}
-
-[testenv:integration]
-commands =
-    pytest -m "integration" {posargs}
-
-[testenv:spark]
-extras = spark
-setenv =
-       PYSPARK_DRIVER_PYTHON = {envpython}
-       PYSPARK_PYTHON = {envpython}
-commands =
-    pytest -m "spark" {posargs}
-
-[testenv:all]
-extras = all
-setenv =
-       PYSPARK_DRIVER_PYTHON = {envpython}
-       PYSPARK_PYTHON = {envpython}
-commands =
-    pytest {posargs}
-"""
 
 [tool.pylint]
 extension-pkg-whitelist = [
