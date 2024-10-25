@@ -136,5 +136,5 @@ def parse_cloudfront_log(file_path: Path) -> Generator[CloudFrontLogEntry, Any, 
 
 
 def webpage_timebucket(t: datetime.datetime):
-    """put timestamp in 6 time buckets (4 hour interval)"""
+    """put timestamp in 4 time buckets (6 hour interval)"""
     return t.replace(hour=t.hour // 6 * 6, second=0, microsecond=0, minute=0, tzinfo=datetime.timezone.utc)
