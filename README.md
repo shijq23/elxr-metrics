@@ -28,3 +28,13 @@ elxr-metrics log_path=logs/mirror_elxr_dev/ csv_path=public/package_stats.csv lo
 ```
 
 After execution, the csv file should be refreshed with the new metrics data from log files. User can open the [index.html](./public/index.html) in a browser to verify the metrics.
+
+## Deployment
+
+The latest metrics page can be accessible via [GitLab Pages](https://elxr-metrics-d8932f.gitlab.io/) or [eLxr website](https://elxr.org/metrics/)
+
+## Reference
+
+- [Python Package Template](https://github.com/microsoft/python-package-template)
+- [aws-log-parser](https://github.com/dpetzold/aws-log-parser/)
+- [Chart.js](https://www.chartjs.org/)

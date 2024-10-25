@@ -10,51 +10,64 @@
 </head>
 
 <body>
-    <h1>eLxr Metrics</h1>
-    <h2>Site View Count</h2>
-    <p>The eLxr site view count is an attempt to map the usage of <a href="https://elxr.org">eLxr web site</a>.
-        This site publishes the site view count gathered from log files.
-        Every day the numbers are updated.</p>
-    <div id="date-range-selector">
-        <label for="date-range">Select Date Range:</label>
-        <select id="date-range">
-            <option value="24h">Last 24 Hours</option>
-            <option value="1w">Last Week</option>
-            <option value="1m" selected>Last Month</option>
-            <option value="custom">Custom</option>
-        </select>
-        <div id="custom-date-range" style="display: none;">
-            <label for="start-date">Start Date:</label>
-            <input type="date" id="start-date">
-            <label for="end-date">End Date:</label>
-            <input type="date" id="end-date">
-
+    <div class="header">
+        <div class="navbar">
+            <div class="container">
+                <a class="navbar-brand" href="https://elxr.org/">
+                    <img src="https://elxr.org/images/eLxr_logo-02-new.png" alt="eLxr logo" width="56" height="30"
+                        class="d-inline-block align-text-top">
+                </a>
+            </div>
         </div>
     </div>
+    <div class="content">
+        <h1>eLxr Metrics</h1>
+        <h2>Site View Count</h2>
+        <p>The eLxr site view count is an attempt to map the usage of <a href="https://elxr.org">eLxr web site</a>.
+            This site publishes the site view count gathered from log files.
+            Every day the numbers are updated.</p>
+        <div id="date-range-selector">
+            <label for="date-range">Select Date Range:</label>
+            <select id="date-range">
+                <option value="24h">Last 24 Hours</option>
+                <option value="1w">Last Week</option>
+                <option value="1m" selected>Last Month</option>
+                <option value="custom">Custom</option>
+            </select>
+            <div id="custom-date-range" style="display: none;">
+                <label for="start-date">Start Date:</label>
+                <input type="date" id="start-date">
+                <label for="end-date">End Date:</label>
+                <input type="date" id="end-date">
 
-    <div id="chart-container">
-        <canvas id="my-chart"></canvas>
-    </div>
-    <div id="view-download">
-        <a href="elxr_org_view.csv" download="elxr_org_view.csv" title="Download CSV data">
-            Download Site View Count data
-        </a>
-    </div>
-    <br />
-    <br />
-    <h2>Package Download Count</h2>
-    <p>The package download count is an attempt to map the usage of eLxr packages. This site publishes the statistics
-        gathered from log files on <a href="https://mirror.elxr.dev/elxr/index.html">eLxr package repository</a>.
-        Every day the statistics are updated.</p>
-    <div id="chart-container-2">
-        <canvas id="my-chart-2"></canvas>
-    </div>
-    <div id="package-download">
-        <a href="package_stats.csv" download="package_stats.csv" title="Download Package statistics data">
-            Download Package statistics data
-        </a>
-    </div>
+            </div>
+        </div>
 
+        <div id="chart-container">
+            <canvas id="my-chart"></canvas>
+        </div>
+        <div id="view-download">
+            <a class="link" href="elxr_org_view.csv" download="elxr_org_view.csv" tooltip="Download CSV Data">
+                Download Site View Count Data
+            </a>
+        </div>
+        <br />
+        <br />
+        <h2>Package Download Count</h2>
+        <p>The package download count is an attempt to map the usage of eLxr packages. This site publishes the
+            statistics
+            gathered from log files on <a href="https://mirror.elxr.dev/elxr/index.html">eLxr package repository</a>.
+            Every day the statistics are updated.</p>
+        <div id="chart-container-2">
+            <canvas id="my-chart-2"></canvas>
+        </div>
+        <div id="package-download">
+            <a class="link" href="package_stats.csv" download="package_stats.csv"
+                tooltip="Download Package Statistics Data">
+                Download Package Statistics Data
+            </a>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 

@@ -6,6 +6,7 @@
 /coverage.xml
 /report.xml
 /.ruff_cache/
+/.tox/
 __pycache__/
 *.pyc
 /.cache/
