@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from elxr_metrics.cloudfront_log import CloudFrontLogEntry, parse_cloudfront_log, to_python
+from elxr_metrics.cloudfront_log import CloudFrontLogEntry, _to_object, parse_cloudfront_log
 
 
 @pytest.mark.parametrize(
@@ -28,8 +28,8 @@ from elxr_metrics.cloudfront_log import CloudFrontLogEntry, parse_cloudfront_log
         ),
     ],
 )
-def test_to_python(value, field, result):
-    actual = to_python(value, field)
+def test_to_object(value, field, result):
+    actual = _to_object(value, field)
     assert actual == result
 
 
