@@ -61,19 +61,19 @@ class CloudFrontLogEntry:  # pylint: disable=too-many-instance-attributes
         return datetime.datetime.combine(self.date, self.time, datetime.timezone.utc)
 
 
-def to_datetime(value: str) -> datetime.datetime:
+def _to_datetime(value: str) -> datetime.datetime:
     """convert str to datetime."""
     return datetime.datetime.fromisoformat(value.rstrip("Z")).replace(tzinfo=datetime.timezone.utc)
 
 
-def to_cookie(value: str) -> dict[str, str]:
+def _to_cookie(value: str) -> dict[str, str]:
     """convert str to dictionary."""
     cookie = cookies.SimpleCookie()
     cookie.load(rawdata=value)
     return {urllib.parse.unquote(key): morsel.value for key, morsel in cookie.items()}
 
 
-def to_python(value: str, field: Field):  # noqa: C901 # pylint: disable=too-many-return-statements
+def _to_object(value: str, field: Field):  # noqa: C901 # pylint: disable=too-many-return-statements
     """convert str to python object."""
     value = value.strip('"')
     field_type = field.type.partition("|")[0].strip()
@@ -87,7 +87,7 @@ def to_python(value: str, field: Field):  # noqa: C901 # pylint: disable=too-man
     if field.name == "cs_uri_query":
         return urllib.parse.parse_qs(value)
     if field.name == "cs_cookie":
-        return to_cookie(value)
+        return _to_cookie(value)
     if field_type == "str":
         return value
     if field_type == "int":
@@ -95,7 +95,7 @@ def to_python(value: str, field: Field):  # noqa: C901 # pylint: disable=too-man
     if field_type == "float":
         return float(value)
     if field_type == "datetime.datetime":
-        return to_datetime(value)
+        return _to_datetime(value)
     if field_type == "datetime.date":
         return datetime.date.fromisoformat(value)
     if field_type == "datetime.time":
@@ -131,7 +131,7 @@ def parse_cloudfront_log(file_path: Path) -> Generator[CloudFrontLogEntry, Any, 
             col = line.split("\t")
 
             yield CloudFrontLogEntry(
-                *[to_python(value, field) for value, field in zip(col, model_fields)]  # type: ignore[valid-type]
+                *[_to_object(value, field) for value, field in zip(col, model_fields)]  # type: ignore[valid-type]
             )
 
 
