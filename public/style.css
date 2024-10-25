@@ -1,14 +1,77 @@
 /* style.css */
 
 body {
-  font-family: Arial, sans-serif;
-  margin: 40px;
-  background-color: #f9f9f9;
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.navbar {
+  width: 100%;
+  height: 58px;
+  box-shadow: none;
+  --bd-violet-rgb: 50, 61, 85;
+  padding: .75rem 0;
+  background-color: transparent;
+  background-image: linear-gradient(to bottom, rgba(var(--bd-violet-rgb), 1), rgba(var(--bd-violet-rgb), 0.95));
+}
+
+.navbar-brand {
+  width: 56px;
+  height: 56px;
+  padding-top: 10px;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: rotate(-2deg) scale(1.1);
+  }
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: calc(1.5rem * .5);
+  padding-left: calc(1.5rem * .5);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.content {
+  width: 100%;
+  padding-right: calc(1.5rem * .5);
+  padding-left: calc(1.5rem * .5);
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 100px;
 }
 
 h1 {
+  font-size: calc(1.425rem + 2.1vw);
+  font-weight: 600;
   text-align: center;
+  margin-top: 30px;
   margin-bottom: 30px;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+p {
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
 }
 
 #date-range-selector {
@@ -83,20 +146,70 @@ canvas {
   margin-top: 20px;
 }
 
-a[title]:hover::after {
-  content: attr(title);
-  position: absolute;
-  top: 100%;
-  left: 0;
+a {
+  color: #323d55;
+  text-decoration: underline;
+}
+
+.link {
+  display: inline;
+  position: relative;
+}
+
+.link:hover:after {
+  bottom: -40px;
   background-color: #000;
   color: #fff;
   padding: 5px;
   border-radius: 3px;
   z-index: 1;
+  white-space: nowrap;
+  content: attr(tooltip);
+  left: 20%;
+  padding: 5px;
+  position: absolute;
 }
 
 #view-download {
   padding: 5px;
   /*font-size: 14px;
   margin-right: 10px;*/
+}
+
+@media (min-width: 576px) {
+  .content,
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .content,
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .content,
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  h1 {
+    font-size: 3rem;
+  }
+  .content,
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .content,
+  .container {
+    max-width: 1320px;
+  }
 }
