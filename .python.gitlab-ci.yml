@@ -14,6 +14,7 @@ python-test:
   stage: test
   script:
     - pytest
+  coverage: /^TOTAL\s+\d+\s+\d+\s+\d+\s+\d+\s+(\d+\%)$/
   artifacts:
     when: always
     expire_in: 7 day
