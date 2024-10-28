@@ -104,6 +104,8 @@ function drawChart(data) {
                     borderColor: 'skyblue',
                     fill: false,
                     yAxisID: 'y',
+                    cubicInterpolationMode: 'monotone',
+                    tension: 0.4
                 },
                 {
                     label: 'Unique User',
@@ -111,6 +113,8 @@ function drawChart(data) {
                     borderColor: 'coral',
                     fill: false,
                     yAxisID: 'y1',
+                    cubicInterpolationMode: 'monotone',
+                    tension: 0.4
                 },
             ]
         },
