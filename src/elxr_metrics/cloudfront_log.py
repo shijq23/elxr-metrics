@@ -21,44 +21,46 @@ from typing import Any, Generator
 class CloudFrontLogEntry:  # pylint: disable=too-many-instance-attributes
     """cloudfront log entry"""
 
-    date: datetime.date
-    time: datetime.time
-    x_edge_location: str
-    sc_bytes: int
-    c_ip: str
-    cs_method: str
-    cs_host: str
-    cs_uri_stem: str
-    sc_status: int
-    cs_referrer: str
-    cs_user_agent: str
-    cs_uri_query: dict | None
-    cs_cookie: cookies.SimpleCookie | None
-    x_edge_result_type: str
-    x_edge_request_id: str
-    x_host_header: str
-    cs_protocol: str
-    cs_bytes: int | None
-    time_taken: float
-    x_forwarded_for: str | None
-    ssl_protocol: str | None
-    ssl_cipher: str | None
-    x_edge_response_result_type: str
-    cs_protocol_version: str
-    fle_status: str
-    fle_encrypted_fields: str
-    c_port: int
-    time_to_first_byte: float
-    x_edge_detailed_result_type: str
-    sc_content_type: str
-    sc_content_len: int
-    sc_range_start: int
-    sc_range_end: int
+    date: datetime.date | None = None
+    time: datetime.time | None = None
+    x_edge_location: str | None = None
+    sc_bytes: int | None = None
+    c_ip: str | None = None
+    cs_method: str | None = None
+    cs_host: str | None = None
+    cs_uri_stem: str | None = None
+    sc_status: int | None = None
+    cs_referrer: str | None = None
+    cs_user_agent: str | None = None
+    cs_uri_query: dict | None = None
+    cs_cookie: cookies.SimpleCookie | None = None
+    x_edge_result_type: str | None = None
+    x_edge_request_id: str | None = None
+    x_host_header: str | None = None
+    cs_protocol: str | None = None
+    cs_bytes: int | None = None
+    time_taken: float | None = None
+    x_forwarded_for: str | None = None
+    ssl_protocol: str | None = None
+    ssl_cipher: str | None = None
+    x_edge_response_result_type: str | None = None
+    cs_protocol_version: str | None = None
+    fle_status: str | None = None
+    fle_encrypted_fields: str | None = None
+    c_port: int | None = None
+    time_to_first_byte: float | None = None
+    x_edge_detailed_result_type: str | None = None
+    sc_content_type: str | None = None
+    sc_content_len: int | None = None
+    sc_range_start: int | None = None
+    sc_range_end: int | None = None
 
     @property
     def timestamp(self) -> datetime.datetime:
         """return the datetime representation."""
-        return datetime.datetime.combine(self.date, self.time, datetime.timezone.utc)
+        return datetime.datetime.combine(
+            self.date or datetime.date.min, self.time or datetime.time.min, datetime.timezone.utc
+        )
 
 
 def _to_datetime(value: str) -> datetime.datetime:
