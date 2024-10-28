@@ -49,7 +49,7 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
                 TO '{csv_file}'
                 WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');"""
             )
-        if csv_file.stat().st_size > 12:  # expect header
+        if csv_file.stat().st_size > 31:  # expect header "TimeBucket,ViewCount,UniqueUser"
             conn.execute(
                 f"""
                 COPY trend

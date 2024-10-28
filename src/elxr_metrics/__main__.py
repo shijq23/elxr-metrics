@@ -36,7 +36,6 @@ def is_file(parser: argparse.ArgumentParser, path: str) -> Path:
         parser.error("The path is empty!")
     d = Path(path)
     if not d.exists():
-        # parser.error(f"The path does not exist! ({path})")
         return d
     if not d.is_file():
         parser.error(f"The path is not file! ({path})")
@@ -89,7 +88,7 @@ def main(args: list[str] | None = None) -> int:
 
     if log_type == "elxr_org_view":
         parse_elxr_org_logs(log_path, csv_path)
-    elif log_type == "package_download":
+    else:  # log_type == "package_download":
         parse_mirror_elxr_dev_logs(log_path, csv_path)
     return 0
 
