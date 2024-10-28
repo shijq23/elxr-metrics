@@ -48,7 +48,7 @@ def _popular_package(csv_file: Path):
                 TO '{csv_file}'
                 WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');"""
             )
-        if csv_file.stat().st_size > 12:  # expect header
+        if csv_file.stat().st_size > 13:  # expect header "Name,Download"
             conn.execute(
                 f"""
                 COPY stats
@@ -84,6 +84,7 @@ def _parse_deb_name(path: str) -> str | None:
     # apt-get search name
     # https://mirror.elxr.dev/elxr/dists/aria/main/binary-amd64/Packages
     # https://debian.osuosl.org/debian/indices/package-file.map.bz2
+    assert path
     file_name = Path(path).name
     match = _DEB_NAME_RE.match(file_name)
     if match:
@@ -95,9 +96,9 @@ def _parse_deb_name(path: str) -> str | None:
 def _update_package_download(conn: duckdb.DuckDBPyConnection, log_entry: CloudFrontLogEntry) -> None:
     if log_entry.sc_content_type != "application/vnd.debian.binary-package":  # only count deb file
         return
-    if log_entry.sc_status >= 400:
+    if log_entry.sc_status is None or log_entry.sc_status >= 400:
         return
-    if not log_entry.cs_uri_stem.startswith("/elxr/pool/"):
+    if log_entry.cs_uri_stem is None or not log_entry.cs_uri_stem.startswith("/elxr/pool/"):
         return
     if not log_entry.cs_uri_stem.endswith(".deb"):
         return
