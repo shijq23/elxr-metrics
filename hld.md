@@ -104,6 +104,7 @@ To accommodate the gitLab CI/CD pipeline, ensure the following environment varia
 
 - `CLOUDFRONT_DISTRIBUTION`: The CloudFront distribution ID exposing the [eLxr website](https://elxr.org/).
 - `CLOUDFRONT_MIRROR_ELXR_DEV`: The CloudFront distribution ID exposing the [eLxr mirror](https://mirror.elxr.dev/elxr/index.html), used for mask only.
+- `CLOUDFRONT_DOCS_ELXR_DEV`: The CloudFront distribution ID exposing the [eLxr docs](https://docs.elxr.dev/index.html), used for mask only.
 - `ELXR_METRICS_BUCKET`: The S3 bucket where CloudFront standard log files are stored.
 - `GITLAB_TOKEN`: A Project Access Token (PAT) with appropriate permissions for pushing commits.
 - `S3_BUCKET`: The S3 bucket that hosts the eLxr Website content.
@@ -112,7 +113,7 @@ These variables should be defined in the GitLab project settings under **Setting
 
 ## Conclusion
 
-This high-level design document provides a comprehensive overview of the metrics collection system for the eLxr Website. By leveraging AWS CloudFront logs, GitLab CI/CD pipelines, Python processing scripts, and a JavaScript-based frontend with Chart.js, the system ensures accurate data collection, automated processing, scalable storage, and user-friendly visualization. Incorporating the specified configuration variables (`CLOUDFRONT_DISTRIBUTION`, `CLOUDFRONT_MIRROR_ELXR_DEV`, `ELXR_METRICS_BUCKET`, `GITLAB_TOKEN`, `S3_BUCKET`) ensures seamless integration and operation.
+This high-level design document provides a comprehensive overview of the metrics collection system for the eLxr Website. By leveraging AWS CloudFront logs, GitLab CI/CD pipelines, Python processing scripts, and a JavaScript-based frontend with Chart.js, the system ensures accurate data collection, automated processing, scalable storage, and user-friendly visualization. Incorporating the specified configuration variables (`CLOUDFRONT_DISTRIBUTION`, `CLOUDFRONT_MIRROR_ELXR_DEV`, `CLOUDFRONT_DOCS_ELXR_DEV`, `ELXR_METRICS_BUCKET`, `GITLAB_TOKEN`, `S3_BUCKET`) ensures seamless integration and operation.
 
 ## Appendices
 
