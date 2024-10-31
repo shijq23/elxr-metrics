@@ -53,6 +53,21 @@ body {
   margin-bottom: 100px;
 }
 
+.footer {
+  height: 72px;
+  background-color: rgba(248, 249, 250, 1);
+  display: flex;
+  justify-content: center;
+}
+
+.ft-content {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  width: 100%;
+  align-content: space-around;
+  color: rgba(33, 37, 41, 0.75);
+}
+
 h1 {
   font-size: calc(1.425rem + 2.1vw);
   font-weight: 600;
@@ -178,6 +193,7 @@ a {
 
 @media (min-width: 576px) {
   .content,
+  .ft-content,
   .container {
     max-width: 540px;
   }
@@ -185,6 +201,7 @@ a {
 
 @media (min-width: 768px) {
   .content,
+  .ft-content,
   .container {
     max-width: 720px;
   }
@@ -192,6 +209,7 @@ a {
 
 @media (min-width: 992px) {
   .content,
+  .ft-content,
   .container {
     max-width: 960px;
   }
@@ -202,6 +220,7 @@ a {
     font-size: 3rem;
   }
   .content,
+  .ft-content,
   .container {
     max-width: 1140px;
   }
@@ -209,6 +228,7 @@ a {
 
 @media (min-width: 1400px) {
   .content,
+  .ft-content,
   .container {
     max-width: 1320px;
   }
