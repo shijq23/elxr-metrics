@@ -4,11 +4,14 @@ const startDateInput = document.getElementById('start-date');
 const endDateInput = document.getElementById('end-date');
 const chartCanvas = document.getElementById('my-chart');
 const chartCanvas2 = document.getElementById('my-chart-2');
+const chartCanvas3 = document.getElementById('my-chart-3');
 
 let chartData = [];
-let top10Data = []
+let top10Data = [];
+let imageTop10Data = [];
 let viewChart;
 let viewChartTop10;
+let viewChartImageTop10;
 
 // Fetch CSV data on page load
 window.addEventListener('load', () => {
@@ -30,6 +33,18 @@ window.addEventListener('load', () => {
         .then(csvData => {
             top10Data = parseCSV(csvData);
             drawTop10Chart(top10Data);
+        })
+        .catch(error => {
+            console.error('Error fetching CSV data:', error);
+        });
+});
+
+window.addEventListener('load', () => {
+    fetch('image_top_10.csv')
+        .then(response => response.text())
+        .then(csvData => {
+            imageTop10Data = parseCSV(csvData);
+            drawImageTop10Chart(imageTop10Data);
         })
         .catch(error => {
             console.error('Error fetching CSV data:', error);
@@ -219,6 +234,61 @@ function drawTop10Chart(data) {
                 title: {
                     display: true,
                     text: 'Top 10 Most Download Packages'
+                },
+                legend: {
+                    display: false,
+                    position: 'right',
+                }
+            },
+        }
+    });
+}
+
+function drawImageTop10Chart(data) {
+    const ctx = chartCanvas3.getContext('2d');
+    if (viewChartImageTop10) {
+        viewChartImageTop10.destroy();  // Destroy existing chart to prevent duplication
+    }
+    viewChartImageTop10 = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.map(item => item.Name),
+            datasets: [{
+                data: data.map(item => item.Download),
+                backgroundColor: [
+                    'skyblue',
+                    'coral',
+                    'mediumseagreen',
+                    'salmon',
+                    'teal',
+                    'lightcoral',
+                    'khaki',
+                    'plum',
+                    'steelblue',
+                    'gold'
+                ],
+                borderColor: [
+                    'deepskyblue',
+                    'tomato',
+                    'seagreen',
+                    'darksalmon',
+                    'darkcyan',
+                    'indianred',
+                    'darkkhaki',
+                    'mediumorchid',
+                    'darkslateblue',
+                    'goldenrod'
+                ],
+                borderWidth: 1,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Top 10 Most Download Images'
                 },
                 legend: {
                     display: false,

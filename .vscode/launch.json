@@ -28,6 +28,19 @@
             "justMyCode": true
         },
         {
+            "name": "downloads elxr dev",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "elxr_metrics",
+            "args": [
+                "logs/downloads_elxr_dev/",
+                "public/image_stats.csv",
+                "image_download"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
             "name": "Python: Debug Tests",
             "type": "debugpy",
             "request": "launch",
