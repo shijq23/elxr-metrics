@@ -23,8 +23,10 @@ The project can be launched manually. After launch, the program expects 3 parame
 ```bash
 elxr-metrics logs/elxr_org/ public/elxr_org_view.csv elxr_org_view
 elxr-metrics logs/mirror_elxr_dev/ public/package_stats.csv package_download
+elxr-metrics logs/downloads_elxr_dev/ public/image_stats.csv image_download
 elxr-metrics log_path=logs/elxr_org/ csv_path=public/elxr_org_view.csv log_type=elxr_org_view
 elxr-metrics log_path=logs/mirror_elxr_dev/ csv_path=public/package_stats.csv log_type=package_download
+elxr-metrics log_path=logs/downloads_elxr_dev/ csv_path=public/image_stats.csv image_download
 ```
 
 After execution, the csv file should be refreshed with the new metrics data from log files. User can open the [index.html](./public/index.html) in a browser to verify the metrics.
