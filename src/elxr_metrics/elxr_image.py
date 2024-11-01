@@ -72,7 +72,7 @@ def _popular_image(csv_file: Path):
         conn.close()
 
 
-_IMAGE_NAME_RE = re.compile(r"\.(img\.zst|tar\.gz|img|iso)$", re.ASCII)
+_IMAGE_NAME_RE = re.compile(r"elxr-.+\.(img\.zst|tar\.gz|img|iso)$", re.ASCII)
 
 
 @cache
@@ -106,10 +106,10 @@ def _update_image_download(conn: duckdb.DuckDBPyConnection, log_entry: CloudFron
         "Error",
     ):
         return
-    if log_entry.sc_bytes is None or log_entry.sc_bytes < 50000:
-        # set the minimum image size 50KB
+    if log_entry.sc_bytes is None or log_entry.sc_bytes < 500000:
+        # set the minimum image size 500KB
         return
-    if log_entry.cs_uri_stem is None or not log_entry.cs_uri_stem.startswith("/elxr-"):
+    if log_entry.cs_uri_stem is None:
         return
     name = _parse_image_name(log_entry.cs_uri_stem)
     if not name:

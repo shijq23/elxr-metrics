@@ -115,6 +115,15 @@ def test_main_mirror_elxr_dev(tmp_path):
     elxr_metrics.__main__.parse_mirror_elxr_dev_logs.assert_called_once_with(log, csv_file)
 
 
+def test_main_downloads_elxr_dev(tmp_path):
+    """test main function to parse image download"""
+    csv_file = tmp_path / "test.csv"
+    log = Path("tests/logs/downloads_elxr_dev")
+    elxr_metrics.__main__.parse_downloads_elxr_dev_logs = MagicMock()
+    main([str(log), str(csv_file), "image_download"])
+    elxr_metrics.__main__.parse_downloads_elxr_dev_logs.assert_called_once_with(log, csv_file)
+
+
 def test_main_log_type(tmp_path):
     """test main function with wrong log_type"""
     csv_file = tmp_path / "test.csv"
