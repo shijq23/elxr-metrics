@@ -14,6 +14,7 @@ import stat
 import sys
 from pathlib import Path
 
+from elxr_metrics.elxr_image import parse_downloads_elxr_dev_logs
 from elxr_metrics.elxr_org_trend import parse_elxr_org_logs
 from elxr_metrics.elxr_package import parse_mirror_elxr_dev_logs
 
@@ -77,7 +78,7 @@ def main(args: list[str] | None = None) -> int:
     parser.add_argument(
         "log_type",
         nargs=1,
-        choices=["elxr_org_view", "package_download"],
+        choices=["elxr_org_view", "package_download", "image_download"],
         help="the log type",
     )
     pa = parser.parse_args(args)
@@ -88,8 +89,10 @@ def main(args: list[str] | None = None) -> int:
 
     if log_type == "elxr_org_view":
         parse_elxr_org_logs(log_path, csv_path)
-    else:  # log_type == "package_download":
+    elif log_type == "package_download":
         parse_mirror_elxr_dev_logs(log_path, csv_path)
+    else:  # must be "image_download"
+        parse_downloads_elxr_dev_logs(log_path, csv_path)
     return 0
 
 
