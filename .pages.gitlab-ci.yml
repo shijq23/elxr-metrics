@@ -18,13 +18,17 @@ pages:
     - aws s3 cp --recursive s3://${ELXR_METRICS_BUCKET}/elxr_org/ logs/elxr_org --exclude "*" --include "*.gz"
     - mkdir logs/mirror_elxr_dev
     - aws s3 cp --recursive s3://${ELXR_METRICS_BUCKET}/mirror_elxr_dev/ logs/mirror_elxr_dev --exclude "*" --include "*.gz"
+    - mkdir logs/downloads_elxr_dev
+    - aws s3 cp --recursive s3://${ELXR_METRICS_BUCKET}/downloads_elxr_dev/ logs/downloads_elxr_dev --exclude "*" --include "*.gz"
     # Process log files
     - elxr-metrics logs/elxr_org/ public/elxr_org_view.csv elxr_org_view
     - elxr-metrics logs/mirror_elxr_dev/ public/package_stats.csv package_download
+    - elxr-metrics logs/downloads_elxr_dev/ public/image_stats.csv image_download
     # Remove processed log files from metrics bucket
     - pushd logs
     - for f in $(ls elxr_org/*.gz); do aws s3 rm s3://${ELXR_METRICS_BUCKET}/$f; done
     - for f in $(ls mirror_elxr_dev/*.gz); do aws s3 rm s3://${ELXR_METRICS_BUCKET}/$f; done
+    - for f in $(ls downloads_elxr_dev/*.gz); do aws s3 rm s3://${ELXR_METRICS_BUCKET}/$f; done
     - popd
     # Copy files to the elxr_org S3 bucket
     - aws s3 sync public/ s3://${S3_BUCKET}/public/metrics/ --delete
