@@ -1,7 +1,7 @@
 # eLxr Metrics
 
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Felxr-metrics-d8932f.gitlab.io%2F)](https://elxr-metrics-d8932f.gitlab.io/)
-![coverage](https://gitlab.com/elxr/website/elxr-metrics/badges/main/coverage.svg?job=python-test)
+[![coverage](https://gitlab.com/elxr/website/elxr-metrics/badges/main/coverage.svg?job=python-test)](https://gitlab.com/elxr/website/elxr-metrics/-/graphs/main/charts)
 [![pipeline](https://gitlab.com/elxr/website/elxr-metrics/badges/main/pipeline.svg)](https://gitlab.com/elxr/website/elxr-metrics/-/commits/main)
 [![release](https://gitlab.com/elxr/website/elxr-metrics/-/badges/release.svg)](https://gitlab.com/elxr/website/elxr-metrics/-/releases/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
