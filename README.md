@@ -1,9 +1,15 @@
 # eLxr Metrics
 
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Felxr-metrics-d8932f.gitlab.io%2F)](https://elxr-metrics-d8932f.gitlab.io/)
 ![coverage](https://gitlab.com/elxr/website/elxr-metrics/badges/main/coverage.svg?job=python-test)
-[![release](https://gitlab.com/elxr/website/elxr-metrics/-/badges/release.svg)](https://gitlab.com/elxr/website/elxr-metrics/-/releases/)
 [![pipeline](https://gitlab.com/elxr/website/elxr-metrics/badges/main/pipeline.svg)](https://gitlab.com/elxr/website/elxr-metrics/-/commits/main)
+[![release](https://gitlab.com/elxr/website/elxr-metrics/-/badges/release.svg)](https://gitlab.com/elxr/website/elxr-metrics/-/releases/)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+![Python Version from PEP 621 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fgitlab.com%2Felxr%2Fwebsite%2Felxr-metrics%2F-%2Fraw%2Fmain%2Fpyproject.toml%3Fref_type%3Dheads)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![GitLab Issues](https://img.shields.io/gitlab/issues/open/elxr/website/elxr-metrics)](https://gitlab.com/elxr/website/elxr-metrics/-/issues)
+[![GitLab Stars](https://img.shields.io/gitlab/stars/elxr%2Fwebsite%2Felxr-metrics)](https://gitlab.com/elxr/website/elxr-metrics/-/starrers)
+[![GitLab Forks](https://img.shields.io/gitlab/forks/elxr%2Fwebsite%2Felxr-metrics)](https://gitlab.com/elxr/website/elxr-metrics/-/forks)
 
 ## Description
 
