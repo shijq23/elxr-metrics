@@ -103,7 +103,7 @@ repos:
         additional_dependencies: ["requests", "PyYAML", "duckdb"]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.7.0
+    rev: v0.7.2
     hooks:
       # Run the linter.
       - id: ruff
@@ -112,3 +112,11 @@ repos:
       # Run the formatter.
       - id: ruff-format
         types_or: [ python, pyi ]
+
+  - repo: https://github.com/tcort/markdown-link-check
+    rev: v3.13.6
+    hooks:
+      - id: markdown-link-check
+        args: ["-v"]
+        #types: [file, markdown, text]
+        #files: \.md$
