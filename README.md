@@ -1,6 +1,9 @@
 # eLxr Metrics
 
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+![coverage](https://gitlab.com/elxr/website/elxr-metrics/badges/main/coverage.svg?job=python-test)
+[![release](https://gitlab.com/elxr/website/elxr-metrics/-/badges/release.svg)](https://gitlab.com/elxr/website/elxr-metrics/-/releases/)
+[![pipeline](https://gitlab.com/elxr/website/elxr-metrics/badges/main/pipeline.svg)](https://gitlab.com/elxr/website/elxr-metrics/-/commits/main)
 
 ## Description
 
