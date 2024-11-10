@@ -4,8 +4,8 @@
 include:
   - template: Jobs/Secret-Detection.gitlab-ci.yml
   - template: SAST.gitlab-ci.yml
-  - local: .python.gitlab-ci.yml
-  - local: .pages.gitlab-ci.yml
+  - local: .gitlab/.python.gitlab-ci.yml
+  - local: .gitlab/.pages.gitlab-ci.yml
 
 stages:
   - lint
