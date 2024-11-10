@@ -49,7 +49,16 @@ This project provides a dev container as a full-featured development environment
 
 ## Deployment
 
-The latest metrics page can be accessible via [GitLab Pages](https://elxr-metrics-d8932f.gitlab.io/) or [eLxr website](https://elxr.org/metrics/)
+The latest metrics page can be accessible via [GitLab Pages](https://elxr-metrics-d8932f.gitlab.io/) or [eLxr website](https://elxr.org/metrics/).
+
+## API doc
+
+Follow steps in [docs README](./docs/README.md) to generate API doc.
+
+## Note
+
+- If this project is forked into personal namespace, the new project's `GitLab Pages` will be hosted on a different domain. In that case, please check your project's `Pages` settings to get the correct link.
+- For testing, this project provides a set of masked CouldFront standard log files under directory [tests/logs](./tests/logs/).
 
 ## Reference
 
