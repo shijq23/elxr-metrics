@@ -40,5 +40,19 @@ python-build:
     paths:
       - dist/*
 
+python-docs:
+  extends: .python-setup
+  stage: build
+  script:
+    - cd docs
+    - apt-get install -y --no-install-recommends make
+    - pip install -r requirements.txt
+    - mkdir -p _static
+    - mkdir -p _templates
+    - make html
+  artifacts:
+    paths:
+      - docs/_build/html/*
+
 variables:
   FLIT_ROOT_INSTALL: 1
