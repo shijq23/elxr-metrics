@@ -24,7 +24,14 @@ repos:
     rev: 5.13.2
     hooks:
       - id: isort
-        args: ["-a", "from __future__ import annotations", "--profile", "black", "--filter-files"]
+        args:
+          [
+            "-a",
+            "from __future__ import annotations",
+            "--profile",
+            "black",
+            "--filter-files",
+          ]
 
   - repo: https://github.com/psf/black
     rev: 24.10.0
@@ -108,15 +115,15 @@ repos:
       # Run the linter.
       - id: ruff
         args: ["src"]
-        types_or: [ python, pyi ]
+        types_or: [python, pyi]
       # Run the formatter.
       - id: ruff-format
-        types_or: [ python, pyi ]
+        types_or: [python, pyi]
 
   - repo: https://github.com/tcort/markdown-link-check
-    rev: v3.13.6
+    rev: v3.12.2
     hooks:
       - id: markdown-link-check
-        args: ["-v"]
-        #types: [file, markdown, text]
-        #files: \.md$
+        args: ["-q"]
+        types: [file, markdown, text]
+        files: \.md$
