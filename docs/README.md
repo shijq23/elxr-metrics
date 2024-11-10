@@ -1,4 +1,4 @@
-# eLxr Metrics Doc
+# eLxr Metrics API doc
 
 ## Generate API doc
 
@@ -12,11 +12,11 @@ mkdir -p _templates
 make html
 ```
 
-After `make`, the newly generated API doc can be viewed at [\_build/html/index.html](_build/html/index.html).
+After `make` command, the newly generated API doc can be viewed at `_build/html/index.html`.
 
 ## Rebuild API doc
 
-After some code changes and to rebuild the HTML, go to the `docs` folder and run:
+After code changes and to rebuild the HTMLs, go to the `docs` folder and run:
 
 ```bash
 make clean html

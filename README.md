@@ -49,6 +49,7 @@ This project provides a dev container as a full-featured development environment
 
 ## Deployment
 
+The contents of [public](./public/) are updated, pushed to internet periodically.
 The latest metrics page can be accessible via [GitLab Pages](https://elxr-metrics-d8932f.gitlab.io/) or [eLxr website](https://elxr.org/metrics/).
 
 ## API doc
