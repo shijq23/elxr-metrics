@@ -38,10 +38,14 @@ elxr-metrics logs/mirror_elxr_dev/ public/package_stats.csv package_download
 elxr-metrics logs/downloads_elxr_dev/ public/image_stats.csv image_download
 elxr-metrics log_path=logs/elxr_org/ csv_path=public/elxr_org_view.csv log_type=elxr_org_view
 elxr-metrics log_path=logs/mirror_elxr_dev/ csv_path=public/package_stats.csv log_type=package_download
-elxr-metrics log_path=logs/downloads_elxr_dev/ csv_path=public/image_stats.csv image_download
+elxr-metrics log_path=logs/downloads_elxr_dev/ csv_path=public/image_stats.csv log_type=image_download
 ```
 
 After execution, the csv file should be refreshed with the new metrics data from log files. User can open the [index.html](./public/index.html) in a browser to verify the metrics.
+
+## Visual Studio Code Dev Containers
+
+This project provides a dev container as a full-featured development environment. Please follow guides on [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers) to creat and connect to a dev container.
 
 ## Deployment
 
@@ -52,3 +56,4 @@ The latest metrics page can be accessible via [GitLab Pages](https://elxr-metric
 - [Python Package Template](https://github.com/microsoft/python-package-template)
 - [aws-log-parser](https://github.com/dpetzold/aws-log-parser/)
 - [Chart.js](https://www.chartjs.org/)
+- [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers)
