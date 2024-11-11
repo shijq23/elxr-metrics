@@ -30,6 +30,11 @@ python-lint:
   script:
     - git init
     - pre-commit run --all-files
+  variables:
+    PRE_COMMIT_HOME: ${CI_PROJECT_DIR}/.cache/pre-commit
+  cache:
+    paths:
+      - ${PRE_COMMIT_HOME}
 
 python-build:
   extends: .python-setup
