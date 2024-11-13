@@ -2,6 +2,10 @@
 pages:
   stage: deploy
   image: python:slim
+  cache:
+    - key: $CI_COMMIT_REF_SLUG
+      paths:
+        - .cache/pip
   tags:
     - S3
   before_script:
@@ -60,3 +64,4 @@ pages:
 
 variables:
   FLIT_ROOT_INSTALL: 1
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
