@@ -13,12 +13,5 @@ stages:
   - test
   - deploy
 
-# Cache to speed up subsequent jobs
-cache:
-  - key: $CI_COMMIT_REF_SLUG
-    paths:
-      - .cache/pip
-
 variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
   SAST_EXCLUDED_PATHS: venv/,logs/

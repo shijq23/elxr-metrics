@@ -1,8 +1,12 @@
 ---
 .python-setup:
   image: python:slim
+  cache:
+    - key: $CI_COMMIT_REF_SLUG
+      paths:
+        - .cache/pip
   before_script:
-    - python --version ; pip --version
+    - python --version; pip --version
     - apt-get update && apt-get install -y --no-install-recommends git
     - pip install flit
     - flit install --only-deps --deps develop
@@ -33,8 +37,12 @@ python-lint:
   variables:
     PRE_COMMIT_HOME: ${CI_PROJECT_DIR}/.cache/pre-commit
   cache:
-    paths:
-      - ${PRE_COMMIT_HOME}
+    - key: pre-commit-$CI_COMMIT_REF_SLUG
+      fallback_keys:
+        - $CI_COMMIT_REF_SLUG
+      paths:
+        - ${PRE_COMMIT_HOME}
+        - .cache/pip
 
 python-build:
   extends: .python-setup
@@ -61,3 +69,4 @@ python-docs:
 
 variables:
   FLIT_ROOT_INSTALL: 1
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"

@@ -34,7 +34,7 @@ pushd docs
 pip install -r requirements.txt
 sphinx-quickstart
 popd
-sphinx-apidoc -o docs  src/elxr_metrics/
+sphinx-apidoc -o docs src/elxr_metrics/
 ```
 
 ## Reference
