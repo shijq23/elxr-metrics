@@ -3,8 +3,8 @@
 * Use this issue template for suggesting new docs or updates to existing docs.
   Note: Doc work as part of feature development is covered in the Feature Request template.
 
-* For issues related to features of the docs.gitlab.com site, see
-  https://gitlab.com/gitlab-org/gitlab-docs/issues/
+* For issues related to features of the eLxr Metrics, see
+  https://gitlab.com/elxr/website/elxr-metrics/issues/
 
 * For information about documentation content and process, see
   https://docs.gitlab.com/ee/development/documentation/
