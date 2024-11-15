@@ -50,7 +50,7 @@ pages:
         git fetch origin;
         git reset --hard origin/$CI_COMMIT_REF_NAME;
         git cherry-pick $cid;
-        git push origin --push-option="ci.skip" HEAD:$CI_COMMIT_REF_NAME;
+        git push origin HEAD:$CI_COMMIT_REF_NAME;
       else
         echo "No changes to commit. Skipping push.";
       fi
