@@ -87,6 +87,10 @@ def test_is_file_error(path):
         (stat.S_IRUSR),  # Readable only
     ],
 )
+@pytest.mark.skipif(
+    sys.platform.startswith("win"),
+    reason="Windows only supports setting the file’s read-only flag",
+)
 def test_is_file_mode(tmp_path, mode):
     p = tmp_path / "hello.csv"
     p.touch()
