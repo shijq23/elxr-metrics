@@ -43,6 +43,14 @@ elxr-metrics log_path=logs/downloads_elxr_dev/ csv_path=public/image_stats.csv l
 
 After execution, the csv file should be refreshed with the new metrics data from log files. User can open the [index.html](./public/index.html) in a browser to verify the metrics.
 
+## Tests
+
+The project contains unit tests. To execute these tests, use the following commands in the virtual environment:
+
+```bash
+pytest tests
+```
+
 ## Visual Studio Code Dev Containers
 
 This project provides a dev container as a full-featured development environment. Please follow guides on [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers) to creat and connect to a dev container.
