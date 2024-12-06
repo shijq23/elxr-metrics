@@ -94,7 +94,10 @@ def _parse_deb_name(path: str) -> str | None:
 
 
 def _update_package_download(conn: duckdb.DuckDBPyConnection, log_entry: CloudFrontLogEntry) -> None:
-    if log_entry.sc_content_type != "application/vnd.debian.binary-package":  # only count deb file
+    if log_entry.sc_content_type not in (
+        "application/vnd.debian.binary-package",
+        "binary/octet-stream",
+    ):  # only count deb file
         return
     if log_entry.sc_status is None or log_entry.sc_status >= 400:
         return
