@@ -12,7 +12,7 @@ from pathlib import Path
 import duckdb
 import pytest
 
-from elxr_metrics.elxr_org_trend import parse_elxr_org_logs
+from elxr_metrics.elxr_org_trend import _country_lookup, parse_elxr_org_logs
 
 
 @pytest.mark.parametrize(
@@ -45,3 +45,13 @@ def test_parse_trend(tmp_path, init_content):
     ]
     actual = duckdb.read_csv(csv_file).fetchall()
     assert set(expected) <= set(actual)
+
+
+@pytest.mark.parametrize(
+    "ip, country",
+    [(None, "N/A"), ("", "N/A"), (" ", "N/A"), ("-", "N/A"), ("8.8.8.8", "United States"), ("999.999.999.999", "N/A")],
+)
+def test_country_lookup_valid_ip(ip, country):
+    """test country lookup"""
+    actual = _country_lookup(ip)
+    assert actual == country

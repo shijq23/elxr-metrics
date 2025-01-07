@@ -109,12 +109,16 @@ def _country_lookup(ip: str) -> str:
 
     :param ip: user IP address
     :type ip: str
-    :return: country name
+    :return: country name, or "N/A" if not found
     :rtype: str
     """
     country = "N/A"
-    with maxminddb.open_database(r"GeoLite2-Country/GeoLite2-Country.mmdb") as reader:
-        country = (reader.get(ip))["country"]["names"]["en"]
+    try:
+        with maxminddb.open_database(r"GeoLite2-Country/GeoLite2-Country.mmdb") as reader:
+            country = reader.get(ip)["country"]["names"]["en"]
+    except Exception:  # pylint: disable=broad-except
+        pass
+
     return country
 
 
