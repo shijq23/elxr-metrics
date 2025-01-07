@@ -9,10 +9,12 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
+from functools import cache
 from pathlib import Path
 from typing import Any, Generator
 
 import duckdb
+import maxminddb
 from duckdb import DuckDBPyConnection
 
 from elxr_metrics.cloudfront_log import CloudFrontLogEntry, parse_cloudfront_log, webpage_timebucket
@@ -23,6 +25,7 @@ ELXR_ORG_VIEW_CSV = Path("public/elxr_org_view.csv")
 
 @contextmanager
 def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
+    country_file = csv_file.parent / "country.csv"
     conn = duckdb.connect(":memory:")
     try:
         conn.execute("""DROP TABLE IF EXISTS trend;""")
@@ -33,6 +36,13 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
             TimeBucket TIMESTAMP PRIMARY KEY,
             ViewCount INTEGER,
             UniqueUser INTEGER
+        );"""
+        )
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS country (
+            Name VARCHAR PRIMARY KEY,
+            Count INTEGER
         );"""
         )
         conn.execute(
@@ -64,6 +74,12 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
             TO '{csv_file}'
             WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');"""
         )
+        conn.execute(
+            f"""
+            COPY (SELECT * FROM country)
+            TO '{country_file}'
+            WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');"""
+        )
         conn.close()
 
 
@@ -86,6 +102,22 @@ def _merge_elxr_org(conn: DuckDBPyConnection) -> None:
     )
 
 
+@cache
+def _country_lookup(ip: str) -> str:
+    """
+    map IP address to country name.
+
+    :param ip: user IP address
+    :type ip: str
+    :return: country name
+    :rtype: str
+    """
+    country = "N/A"
+    with maxminddb.open_database(r"GeoLite2-Country/GeoLite2-Country.mmdb") as reader:
+        country = (reader.get(ip))["country"]["names"]["en"]
+    return country
+
+
 def _process_log_entry(conn: DuckDBPyConnection, log_entry: CloudFrontLogEntry) -> None:
     """process the log entry and insert into temp table"""
     if log_entry.sc_content_type != "text/html":  # only count web page reviews
@@ -93,6 +125,12 @@ def _process_log_entry(conn: DuckDBPyConnection, log_entry: CloudFrontLogEntry) 
     t = webpage_timebucket(log_entry.timestamp)
     ts = t.strftime(r"%Y-%m-%d %H:%M:%S")
     conn.execute(f"INSERT INTO temp_data (TimeBucket, ClientIP) values ('{ts}', '{log_entry.c_ip}');")
+    name = _country_lookup(log_entry.c_ip)
+    conn.execute(
+        f"""
+        INSERT INTO country (Name, Count) values ('{name}', 1)
+        ON CONFLICT (Name) DO UPDATE SET Count = country.Count + 1; """
+    )
 
 
 @timing

@@ -5,6 +5,7 @@ const endDateInput = document.getElementById('end-date');
 const chartCanvas = document.getElementById('my-chart');
 const chartCanvas2 = document.getElementById('my-chart-2');
 const chartCanvas3 = document.getElementById('my-chart-3');
+const trackingMap = document.getElementById('tracking-map');
 
 let chartData = [];
 let top10Data = [];
@@ -298,6 +299,82 @@ function drawImageTop10Chart(data) {
         }
     });
 }
+
+maplibregl.setRTLTextPlugin(
+    'https://unpkg.com/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.min.js'
+);
+
+var map = new maplibregl.Map({
+    container: 'tracking-map',
+    style: 'https://demotiles.maplibre.org/style.json', // stylesheet location
+    center: [-74.5, 40], // starting position [lng, lat]
+    zoom: 1 // starting zoom
+});
+
+window.addEventListener('load', () => {
+    async function loadCountryData() {
+        try {
+            const response = await fetch('country.csv');
+            const csvData = await response.text();
+            countryData = parseCSV(csvData);
+            return countryData;
+        } catch (error) {
+            console.error('Error fetching CSV data:', error);
+        }
+    }
+
+    async function loadCountryCord() {
+        try {
+            const response = await fetch('countries.csv');
+            const csvData = await response.text();
+            countryCord = parseCSV(csvData);
+            return countryCord;
+        } catch (error) {
+            console.error('Error fetching CSV data:', error);
+        }
+    }
+
+    async function placeMarkers() {
+        const countryData = await loadCountryData();
+        const countryCord = await loadCountryCord();
+
+        let i = 0;
+        while (countryData[i]['Name']) {
+            let cordIndex = -1;
+
+            let j = 0;
+            while (countryCord[j]['name']) {
+                let countryName = countryCord[j]['name'];
+                countryName = countryName.replace(/['"]/g, '');
+                if (countryName == countryData[i]['Name']) {
+                    cordIndex = j;
+                    break;
+                }
+                j++;
+            }
+
+            if (cordIndex >= 0) {
+                long = countryCord[cordIndex]['longitude'];
+                lat = countryCord[cordIndex]['latitude'];
+
+                const popupString = '<div style="height:40px;"><p style="text-align:center; vertical-align: middle; margin:auto; font-size:12px;"><b>' + countryData[i]['Name'] + '</b><br>Visits: ' + countryData[i]['Count'] + '</p></div>';
+
+                let popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false })
+                    .setLngLat([long, lat])
+                    .setHTML(popupString)
+                    .setMaxWidth('130px')
+                    .addTo(map);
+            }
+            i++;
+        }
+    }
+
+    placeMarkers();
+
+    map.dragRotate.disable();
+    map.keyboard.disable();
+    map.touchZoomRotate.disableRotation();
+});
 
 function parseCSV(csvData) {
     const normalized = csvData.replace(/\r\n|\r/g, '\n');

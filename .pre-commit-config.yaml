@@ -113,7 +113,7 @@ repos:
       - id: pylint
         #args: ["--toml=pyproject.toml"]
         files: src
-        additional_dependencies: ["requests", "PyYAML", "duckdb"]
+        additional_dependencies: ["requests", "PyYAML", "duckdb", "maxminddb"]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.7.3
