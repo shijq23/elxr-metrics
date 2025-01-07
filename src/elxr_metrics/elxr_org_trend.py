@@ -102,6 +102,9 @@ def _merge_elxr_org(conn: DuckDBPyConnection) -> None:
     )
 
 
+_COUNTRY_READER = maxminddb.open_database(r"GeoLite2-Country/GeoLite2-Country.mmdb")
+
+
 @cache
 def _country_lookup(ip: str) -> str:
     """
@@ -114,8 +117,7 @@ def _country_lookup(ip: str) -> str:
     """
     country = "N/A"
     try:
-        with maxminddb.open_database(r"GeoLite2-Country/GeoLite2-Country.mmdb") as reader:
-            country = reader.get(ip)["country"]["names"]["en"]
+        country = _COUNTRY_READER.get(ip)["country"]["names"]["en"]
     except Exception:  # pylint: disable=broad-except
         pass
 
