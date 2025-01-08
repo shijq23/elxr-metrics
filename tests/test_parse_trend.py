@@ -49,9 +49,22 @@ def test_parse_trend(tmp_path, init_content):
 
 @pytest.mark.parametrize(
     "ip, country",
-    [(None, "N/A"), ("", "N/A"), (" ", "N/A"), ("-", "N/A"), ("8.8.8.8", "United States"), ("999.999.999.999", "N/A")],
+    [
+        (None, "N/A"),
+        ("", "N/A"),
+        (" ", "N/A"),
+        ("-", "N/A"),
+        ("8.8.8.8", "United States"),
+        ("67.69.172.12", "Canada"),
+        ("210.227.116.101", "Japan"),
+        ("203.127.232.194", "Singapore"),
+        ("114.114.114.114", "China"),
+        ("212.27.40.240", "France"),
+        ("168.126.63.1", "South Korea"),
+        ("999.999.999.999", "N/A"),
+    ],
 )
-def test_country_lookup_valid_ip(ip, country):
+def test_country_lookup(ip, country):
     """test country lookup"""
     actual = _country_lookup(ip)
     assert actual == country
