@@ -76,7 +76,7 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
         )
         conn.execute(
             f"""
-            COPY (SELECT * FROM country)
+            COPY (SELECT * FROM country ORDER BY Count DESC, Name ASC)
             TO '{country_file}'
             WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');"""
         )
