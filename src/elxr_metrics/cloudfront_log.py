@@ -137,6 +137,16 @@ def parse_cloudfront_log(file_path: Path) -> Generator[CloudFrontLogEntry, Any, 
             )
 
 
-def webpage_timebucket(t: datetime.datetime):
-    """put timestamp in 4 time buckets (6 hour interval)"""
+def webpage_timebucket(t: datetime.datetime) -> datetime.datetime:
+    """Put timestamp in 4 time buckets (6-hour interval).
+
+    This function takes a datetime object and return the containing timebucket.
+    The resulting datetime will have the hour set to 0, 6, 12, or 18, with minutes, seconds,
+    and microseconds set to 0, and the timezone set to UTC.
+
+    :param t: The original timestamp.
+    :type t: datetime.datetime
+    :return: The timestamp reprenting the containing timebucket (6-hour interval).
+    :rtype: datetime.datetime
+    """
     return t.replace(hour=t.hour // 6 * 6, second=0, microsecond=0, minute=0, tzinfo=datetime.timezone.utc)
