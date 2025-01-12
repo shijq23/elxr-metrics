@@ -146,7 +146,7 @@ def webpage_timebucket(t: datetime.datetime) -> datetime.datetime:
 
     :param t: The original timestamp.
     :type t: datetime.datetime
-    :return: The timestamp reprenting the containing timebucket (6-hour interval).
+    :return: The timestamp representing the containing timebucket (6-hour interval).
     :rtype: datetime.datetime
     """
     return t.replace(hour=t.hour // 6 * 6, second=0, microsecond=0, minute=0, tzinfo=datetime.timezone.utc)
