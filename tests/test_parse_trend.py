@@ -10,6 +10,7 @@ import datetime
 from pathlib import Path
 
 import duckdb
+import maxminddb
 import pytest
 
 from elxr_metrics.elxr_org_trend import _country_lookup, parse_elxr_org_logs
@@ -77,3 +78,30 @@ def test_country_lookup(ip, country):
     csv_path: Path = Path(__file__).parent.parent / "public" / "countries.csv"
     countries = [row[3] for row in duckdb.read_csv(csv_path).fetchall()]
     assert country in countries
+
+
+@pytest.mark.skip(reason="This test is slow")
+def test_all_country_names():
+    """test all country names are in countries.csv"""
+    country_names = _get_country_names()
+    csv_path: Path = Path(__file__).parent.parent / "public" / "countries.csv"
+    countries = [row[3] for row in duckdb.read_csv(csv_path).fetchall()]
+    assert country_names <= set(countries)
+
+
+def _get_country_names():
+    """dump country names from mmdb file.
+
+    Execution of this function is not required for test_country_lookup.
+    It is used to verify the country names are all in countries.csv.
+    Running time is about 200 seconds.
+    """
+    DB_PATH = "GeoLite2-Country/GeoLite2-Country.mmdb"
+    country_names = set()
+    with maxminddb.Reader(DB_PATH) as reader:
+        # All countries are stored in metadata's country ISO code mappings
+        for record in reader:
+            r = record[1]
+            name = r.get("registered_country", {}).get("names", {}).get("en")
+            country_names.add(name)
+    return country_names
