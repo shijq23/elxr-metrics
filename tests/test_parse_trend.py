@@ -63,6 +63,7 @@ def test_parse_trend(tmp_path, init_content):
         ("168.126.63.1", "South Korea"),
         ("170.81.34.76", "Costa Rica"),
         ("27.7.22.190", "India"),
+        ("88.247.12.187", "Türkiye"),  # Turkey
         ("999.999.999.999", "N/A"),
     ],
 )
@@ -70,3 +71,9 @@ def test_country_lookup(ip, country):
     """test country lookup"""
     actual = _country_lookup(ip)
     assert actual == country
+    if actual == "N/A":
+        return
+    # verify countries.csv has the country name and coordinates
+    csv_path: Path = Path(__file__).parent.parent / "public" / "countries.csv"
+    countries = [row[3] for row in duckdb.read_csv(csv_path).fetchall()]
+    assert country in countries
