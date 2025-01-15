@@ -96,12 +96,12 @@ def _get_country_names():
     It is used to verify the country names are all in countries.csv.
     Running time is about 200 seconds.
     """
-    DB_PATH = "GeoLite2-Country/GeoLite2-Country.mmdb"
-    country_names = set()
+    DB_PATH = r"GeoLite2-Country/GeoLite2-Country.mmdb"
+    country_names: set[str] = set()
     with maxminddb.Reader(DB_PATH) as reader:
         # All countries are stored in metadata's country ISO code mappings
         for record in reader:
             r = record[1]
             name = r.get("registered_country", {}).get("names", {}).get("en")
-            country_names.add(name)
+            country_names.add(str(name))
     return country_names
