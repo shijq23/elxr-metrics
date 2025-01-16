@@ -83,7 +83,10 @@ def test_country_lookup(ip, country):
 
 @pytest.mark.skip(reason="This test is slow")
 def test_all_country_names():
-    """test all country names are in countries.csv"""
+    """test all country names are in countries.csv.
+
+    This test ensures all country names in GeoLite2-Country.mmdb are in countries.csv.
+    """
     country_names = _get_country_names()
     csv_path: Path = Path(__file__).parent.parent / "public" / "countries.csv"
     countries = [row[3] for row in duckdb.read_csv(csv_path).fetchall()]
