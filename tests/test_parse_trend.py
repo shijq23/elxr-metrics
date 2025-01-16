@@ -65,6 +65,7 @@ def test_parse_trend(tmp_path, init_content):
         ("170.81.34.76", "Costa Rica"),
         ("27.7.22.190", "India"),
         ("88.247.12.187", "Türkiye"),  # Turkey
+        ("91.220.37.68", "The Netherlands"),  # Netherlands
         ("999.999.999.999", "N/A"),
     ],
 )
