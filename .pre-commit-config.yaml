@@ -12,6 +12,7 @@ repos:
       - id: check-case-conflict
       - id: check-merge-conflict
       - id: check-symlinks
+      - id: check-xml
       - id: check-yaml
       - id: debug-statements
       - id: end-of-file-fixer
@@ -22,6 +23,9 @@ repos:
       - id: check-illegal-windows-names
       - id: check-docstring-first
       - id: check-json
+      - id: detect-aws-credentials
+        args: ["--allow-missing-credentials"]
+      - id: detect-private-key
       - id: check-toml
       - id: destroyed-symlinks
 
