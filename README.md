@@ -75,3 +75,7 @@ Follow steps in [docs README](./docs/README.md) to generate API doc.
 - [aws-log-parser](https://github.com/dpetzold/aws-log-parser/)
 - [Chart.js](https://www.chartjs.org/)
 - [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers)
+- [GeoLite2 Data](https://www.maxmind.com)
+- [Countries Dataset](https://developers.google.com/public-data/docs/canonical/countries_csv)
+- [Country Codes](https://www.geonames.org/countries/)
+- [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/)

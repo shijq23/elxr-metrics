@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path("..", "src").resolve()))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "eLxr Metrics"
-copyright = "2024, eLxr Project"
+copyright = "2025, eLxr Project"
 author = "eLxr Project"
 release = "0.0.1"
 
