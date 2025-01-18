@@ -14,6 +14,7 @@ AS,-14.270972,-170.132217,"American Samoa"
 AT,47.516231,14.550072,Austria
 AU,-25.274398,133.775136,Australia
 AW,12.52111,-69.968338,Aruba
+AX,60.1785,19.9156,Åland
 AZ,40.143105,47.576927,Azerbaijan
 BA,43.915886,17.679076,"Bosnia and Herzegovina"
 BB,13.193887,-59.543198,Barbados
@@ -51,6 +52,7 @@ CO,4.570868,-74.297333,Colombia
 CR,9.748917,-83.753428,"Costa Rica"
 CU,21.521757,-77.781167,Cuba
 CV,16.002082,-24.013197,"Cape Verde"
+CW,12.1696,68.99,Curaçao
 CX,-10.447525,105.690449,"Christmas Island"
 CY,35.126413,33.429859,Cyprus
 CZ,49.817492,15.472962,"Czech Republic"
@@ -209,6 +211,7 @@ SR,3.919305,-56.027783,Suriname
 SS,6.877,31.307,"South Sudan"
 ST,0.18636,6.613081,"São Tomé and Príncipe"
 SV,13.794185,-88.89653,"El Salvador"
+SX,18.0425,63.0548,"Sint Maarten"
 SY,34.802075,38.996815,Syria
 SZ,-26.522503,31.465866,Swaziland
 TC,21.694025,-71.797928,"Turks and Caicos Islands"
@@ -229,7 +232,7 @@ TW,23.69781,120.960515,Taiwan
 TZ,-6.369028,34.888822,Tanzania
 UA,48.379433,31.16558,Ukraine
 UG,1.373333,32.290275,Uganda
-UM,,,"U.S. Minor Outlying Islands"
+UM,19.2823,166.647,"U.S. Minor Outlying Islands"
 US,37.09024,-95.712891,"United States"
 UY,-32.522779,-55.765835,Uruguay
 UZ,41.377491,64.585262,Uzbekistan
