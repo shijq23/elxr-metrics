@@ -8,9 +8,9 @@
 
 from __future__ import annotations
 
+import logging
 from contextlib import contextmanager
 from functools import cache
-import logging
 from pathlib import Path
 from typing import Any, Generator
 
