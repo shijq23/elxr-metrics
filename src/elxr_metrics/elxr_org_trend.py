@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from functools import cache
+import logging
 from pathlib import Path
 from typing import Any, Generator
 
@@ -21,6 +22,8 @@ from elxr_metrics.cloudfront_log import CloudFrontLogEntry, parse_cloudfront_log
 from elxr_metrics.elapsed import timing
 
 ELXR_ORG_VIEW_CSV = Path("public/elxr_org_view.csv")
+
+logger = logging.getLogger(__name__)
 
 
 @contextmanager
@@ -119,11 +122,14 @@ def _country_lookup(ip: str) -> tuple[str, str]:
     country = "N/A"
     code = "N/A"
     try:
-        code = _COUNTRY_READER.get(ip)["country"]["iso_code"]
-        country = _COUNTRY_READER.get(ip)["country"]["names"]["en"]
+        r = _COUNTRY_READER.get(ip)
+        c = r.get("country") or r.get("registered_country")
+        code = c["iso_code"]
+        country = c["names"]["en"]
     except Exception:  # pylint: disable=broad-except
         pass
-
+    if code == "N/A":
+        logger.warning("failed to lookup country for IP: %s", ip)
     return code, country
 
 
@@ -135,6 +141,8 @@ def _process_log_entry(conn: DuckDBPyConnection, log_entry: CloudFrontLogEntry) 
     ts = t.strftime(r"%Y-%m-%d %H:%M:%S")
     conn.execute(f"INSERT INTO temp_data (TimeBucket, ClientIP) values ('{ts}', '{log_entry.c_ip}');")
     code, name = _country_lookup(log_entry.c_ip)
+    if code == "N/A":  # no country info, skip
+        return
     conn.execute(
         f"""
         INSERT INTO country (Code, Name, Count) values ('{code}', '{name}', 1)

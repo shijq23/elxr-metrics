@@ -67,6 +67,8 @@ def test_parse_trend(tmp_path, init_content):
         ("88.247.12.187", "TR"),  # Turkey
         ("91.220.37.68", "NL"),  # Netherlands
         ("999.999.999.999", "N/A"),
+        ("77.111.247.13", "NO"),
+        # ("68.0.30.21", "US"),  # US
     ],
 )
 def test_country_lookup(ip, code):
@@ -82,30 +84,33 @@ def test_country_lookup(ip, code):
 
 
 @pytest.mark.skip(reason="This test is slow")
-def test_all_country_names():
-    """test all country names are in countries.csv.
+def test_all_country_codes():
+    """test all country codes are in countries.csv.
 
-    This test ensures all country names in GeoLite2-Country.mmdb are in countries.csv.
+    This test ensures all country codes in GeoLite2-Country.mmdb are in countries.csv.
     """
-    country_names = _get_country_names()
+    country_codes = _get_country_codes()
     csv_path: Path = Path(__file__).parent.parent / "public" / "countries.csv"
-    countries = [row[3] for row in duckdb.read_csv(csv_path).fetchall()]
-    assert country_names <= set(countries)
+    countries = [row[0] for row in duckdb.read_csv(csv_path).fetchall()]
+    assert country_codes <= set(countries)
 
 
-def _get_country_names():
-    """dump country names from mmdb file.
+def _get_country_codes():
+    """dump country codes from mmdb file.
 
     Execution of this function is not required for test_country_lookup.
-    It is used to verify the country names are all in countries.csv.
+    It is used to verify the country codes are all in countries.csv.
     Running time is about 200 seconds.
     """
     DB_PATH = r"GeoLite2-Country/GeoLite2-Country.mmdb"
-    country_names: set[str] = set()
+    country_codes: set[str] = set()
     with maxminddb.Reader(DB_PATH) as reader:
         # All countries are stored in metadata's country ISO code mappings
         for record in reader:
             r = record[1]
-            name = r.get("registered_country", {}).get("names", {}).get("en")
-            country_names.add(str(name))
-    return country_names
+            c = r.get("country") or r.get("registered_country")
+            # name = r.get("registered_country", {}).get("names", {}).get("en")
+            # country_codes.add(str(name))
+            code = c.get("iso_code")
+            country_codes.add(str(code))
+    return country_codes
