@@ -339,14 +339,13 @@ window.addEventListener('load', () => {
         const countryCord = await loadCountryCord();
 
         let i = 0;
-        while (countryData[i]['Name']) {
+        while (countryData[i]['Code']) {
             let cordIndex = -1;
 
             let j = 0;
-            while (countryCord[j]['name']) {
-                let countryName = countryCord[j]['name'];
-                countryName = countryName.replace(/['"]/g, '');
-                if (countryName == countryData[i]['Name']) {
+            while (countryCord[j]['country']) {
+                let countryCode = countryCord[j]['country'];
+                if (countryCode == countryData[i]['Code']) {
                     cordIndex = j;
                     break;
                 }
