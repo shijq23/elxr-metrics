@@ -49,36 +49,36 @@ def test_parse_trend(tmp_path, init_content):
 
 
 @pytest.mark.parametrize(
-    "ip, country",
+    "ip, code",
     [
         (None, "N/A"),
         ("", "N/A"),
         (" ", "N/A"),
         ("-", "N/A"),
-        ("8.8.8.8", "United States"),
-        ("67.69.172.12", "Canada"),
-        ("210.227.116.101", "Japan"),
-        ("203.127.232.194", "Singapore"),
-        ("114.114.114.114", "China"),
-        ("212.27.40.240", "France"),
-        ("168.126.63.1", "South Korea"),
-        ("170.81.34.76", "Costa Rica"),
-        ("27.7.22.190", "India"),
-        ("88.247.12.187", "Türkiye"),  # Turkey
-        ("91.220.37.68", "The Netherlands"),  # Netherlands
+        ("8.8.8.8", "US"),
+        ("67.69.172.12", "CA"),
+        ("210.227.116.101", "JP"),
+        ("203.127.232.194", "SG"),
+        ("114.114.114.114", "CN"),
+        ("212.27.40.240", "FR"),
+        ("168.126.63.1", "KR"),
+        ("170.81.34.76", "CR"),
+        ("27.7.22.190", "IN"),
+        ("88.247.12.187", "TR"),  # Turkey
+        ("91.220.37.68", "NL"),  # Netherlands
         ("999.999.999.999", "N/A"),
     ],
 )
-def test_country_lookup(ip, country):
+def test_country_lookup(ip, code):
     """test country lookup"""
-    actual = _country_lookup(ip)
-    assert actual == country
-    if actual == "N/A":
+    codes = _country_lookup(ip)[0]
+    assert codes == code
+    if codes == "N/A":
         return
     # verify countries.csv has the country name and coordinates
     csv_path: Path = Path(__file__).parent.parent / "public" / "countries.csv"
-    countries = [row[3] for row in duckdb.read_csv(csv_path).fetchall()]
-    assert country in countries
+    countries = [row[0] for row in duckdb.read_csv(csv_path).fetchall()]
+    assert codes in countries
 
 
 @pytest.mark.skip(reason="This test is slow")

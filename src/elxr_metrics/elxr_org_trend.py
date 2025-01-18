@@ -41,7 +41,8 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
         conn.execute(
             """
             CREATE TABLE IF NOT EXISTS country (
-            Name VARCHAR PRIMARY KEY,
+            Code VARCHAR PRIMARY KEY,
+            Name VARCHAR,
             Count INTEGER
         );"""
         )
@@ -76,7 +77,7 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
         )
         conn.execute(
             f"""
-            COPY (SELECT * FROM country ORDER BY Count DESC, Name ASC)
+            COPY (SELECT * FROM country ORDER BY Count DESC, Code ASC)
             TO '{country_file}'
             WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');"""
         )
@@ -106,22 +107,24 @@ _COUNTRY_READER = maxminddb.open_database(r"GeoLite2-Country/GeoLite2-Country.mm
 
 
 @cache
-def _country_lookup(ip: str) -> str:
+def _country_lookup(ip: str) -> tuple[str, str]:
     """
-    map IP address to country name.
+    map IP address to country iso-code and name.
 
     :param ip: user IP address
     :type ip: str
-    :return: country name, or "N/A" if not found
-    :rtype: str
+    :return: country iso-code and name, or "N/A" if not found
+    :rtype: tuple[str, str]
     """
     country = "N/A"
+    code = "N/A"
     try:
+        code = _COUNTRY_READER.get(ip)["country"]["iso_code"]
         country = _COUNTRY_READER.get(ip)["country"]["names"]["en"]
     except Exception:  # pylint: disable=broad-except
         pass
 
-    return country
+    return code, country
 
 
 def _process_log_entry(conn: DuckDBPyConnection, log_entry: CloudFrontLogEntry) -> None:
@@ -131,11 +134,11 @@ def _process_log_entry(conn: DuckDBPyConnection, log_entry: CloudFrontLogEntry) 
     t = webpage_timebucket(log_entry.timestamp)
     ts = t.strftime(r"%Y-%m-%d %H:%M:%S")
     conn.execute(f"INSERT INTO temp_data (TimeBucket, ClientIP) values ('{ts}', '{log_entry.c_ip}');")
-    name = _country_lookup(log_entry.c_ip)
+    code, name = _country_lookup(log_entry.c_ip)
     conn.execute(
         f"""
-        INSERT INTO country (Name, Count) values ('{name}', 1)
-        ON CONFLICT (Name) DO UPDATE SET Count = country.Count + 1; """
+        INSERT INTO country (Code, Name, Count) values ('{code}', '{name}', 1)
+        ON CONFLICT (Code) DO UPDATE SET Count = country.Count + 1; """
     )
 
 
