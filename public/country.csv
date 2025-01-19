@@ -1,35 +1,28 @@
-Name,Count
-United States,291
-Canada,41
-Germany,35
-China,33
-United Kingdom,23
-India,18
-Singapore,17
-France,15
-The Netherlands,11
-Namibia,9
-Russia,8
-Ireland,7
-Japan,6
-Portugal,4
-Türkiye,4
-Algeria,3
-Austria,3
-Indonesia,3
-Sweden,3
-Ukraine,3
-Bulgaria,2
-Senegal,2
-South Korea,2
-Australia,1
-Chile,1
-Denmark,1
-Greece,1
-Hong Kong,1
-Hungary,1
-Italy,1
-Nigeria,1
-Serbia,1
-Spain,1
-Tanzania,1
+Code,Name,Count
+US,United States,386
+FR,France,18
+NL,The Netherlands,16
+CN,China,15
+JP,Japan,15
+BR,Brazil,14
+RU,Russia,13
+DE,Germany,11
+IN,India,11
+CA,Canada,10
+PL,Poland,9
+GB,United Kingdom,8
+AU,Australia,6
+SG,Singapore,6
+BD,Bangladesh,5
+UA,Ukraine,3
+CR,Costa Rica,2
+DK,Denmark,2
+FI,Finland,2
+GR,Greece,2
+LT,Lithuania,2
+MX,Mexico,2
+RO,Romania,2
+SE,Sweden,2
+ES,Spain,1
+PH,Philippines,1
+TR,Türkiye,1
