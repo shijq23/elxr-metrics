@@ -14,7 +14,7 @@
 
 ## Description
 
-The eLxr Metrics project is designed to provide insights into the website performance and package distribution metrics. It tracks key indicators such as website view count and download statistics for binary packages, presenting the data in visually informative charts. The dashboard allows administrators to monitor website traffic and package popularity, ensuring effective tracking and optimization of resource delivery. For further design details, user can go to [High-Level Design Document for eLxr Metrics Collection](./hld.md).
+The eLxr Metrics project is designed to provide insights into the website performance and package distribution metrics. It tracks key indicators such as website view count and download statistics for binary packages from Amazon CloudFront Standard logging, presenting the data in visually informative charts. The dashboard allows administrators to monitor website traffic and package popularity, ensuring effective tracking and optimization of resource delivery. For further design details, user can go to [High-Level Design Document for eLxr Metrics Collection](./hld.md).
 
 ## Getting started
 
