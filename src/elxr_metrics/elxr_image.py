@@ -72,7 +72,7 @@ def _popular_image(csv_file: Path):
         conn.close()
 
 
-_IMAGE_NAME_RE = re.compile(r"elxr-.+\.(img\.zst|tar\.gz|img|iso)$", re.ASCII)
+_IMAGE_NAME_RE = re.compile(r"elxr-.+\.(img\.zst|tar\.gz|img|iso|qcow2)$", re.ASCII)
 
 
 @cache
