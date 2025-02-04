@@ -101,14 +101,14 @@ def _update_image_download(conn: duckdb.DuckDBPyConnection, log_entry: CloudFron
     #     return
     if log_entry.sc_status is None or log_entry.sc_status >= 400:
         return
+    if log_entry.sc_bytes is None or log_entry.sc_bytes < 500000:
+        # set the minimum image size 500KB
+        return
     if log_entry.x_edge_result_type is None or log_entry.x_edge_result_type in (
         "LimitExceeded",
         "CapacityExceeded",
         "Error",
     ):
-        return
-    if log_entry.sc_bytes is None or log_entry.sc_bytes < 500000:
-        # set the minimum image size 500KB
         return
     if log_entry.cs_uri_stem is None:
         return
