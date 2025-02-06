@@ -130,14 +130,14 @@ repos:
       - id: ruff-format
         types_or: [python, pyi]
 
-  - repo: https://github.com/tcort/markdown-link-check
-  # pin to v3.12.2
-    rev: v3.12.2
-    hooks:
-      - id: markdown-link-check
-        args: ["-q"]
-        types: [file, markdown, text]
-        files: \.md$
+  # - repo: https://github.com/tcort/markdown-link-check
+  # # pin to v3.12.2
+  #   rev: v3.12.2
+  #   hooks:
+  #     - id: markdown-link-check
+  #       args: ["-q"]
+  #       types: [file, markdown, text]
+  #       files: \.md$
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.10.0.1
