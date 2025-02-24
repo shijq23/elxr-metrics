@@ -1,31 +1,62 @@
 Code,Name,Count
-US,United States,173
-FR,France,110
-IT,Italy,38
-CN,China,33
-IN,India,29
-JP,Japan,21
-DE,Germany,17
-NL,The Netherlands,16
-CR,Costa Rica,11
-SG,Singapore,10
-IE,Ireland,9
-AT,Austria,7
-CA,Canada,7
-RU,Russia,7
-KR,South Korea,5
-TW,Taiwan,5
-PT,Portugal,4
-SI,Slovenia,4
-MX,Mexico,3
-SC,Seychelles,3
-GB,United Kingdom,2
-PL,Poland,2
-SE,Sweden,2
+US,United States,1459
+SG,Singapore,935
+FR,France,324
+CN,China,223
+IN,India,141
+NL,The Netherlands,141
+DE,Germany,118
+GB,United Kingdom,87
+MD,Moldova,73
+JP,Japan,72
+RO,Romania,63
+RU,Russia,56
+CA,Canada,50
+KR,South Korea,36
+BR,Brazil,31
+BA,Bosnia and Herzegovina,27
+HK,Hong Kong,26
+IT,Italy,26
+TW,Taiwan,25
+SE,Sweden,24
+SC,Seychelles,20
+PL,Poland,17
+PT,Portugal,12
+IE,Ireland,11
+UA,Ukraine,11
+AT,Austria,10
+FI,Finland,10
+KH,Cambodia,10
+ES,Spain,9
+BD,Bangladesh,8
+BE,Belgium,6
+BG,Bulgaria,6
+EG,Egypt,6
+ID,Indonesia,6
+CH,Switzerland,5
+TR,Türkiye,5
+AU,Australia,3
+HU,Hungary,3
+MZ,Mozambique,3
+PH,Philippines,3
+AE,United Arab Emirates,2
+CL,Chile,2
+CO,Colombia,2
+EE,Estonia,2
+LK,Sri Lanka,2
+MA,Morocco,2
+PA,Panama,2
+TZ,Tanzania,2
 VN,Vietnam,2
+ZA,South Africa,2
 AR,Argentina,1
-AU,Australia,1
-ES,Spain,1
-HK,Hong Kong,1
-QA,Qatar,1
-UA,Ukraine,1
+CR,Costa Rica,1
+CZ,Czechia,1
+DK,Denmark,1
+GH,Ghana,1
+LT,Lithuania,1
+MX,Mexico,1
+MY,Malaysia,1
+RS,Serbia,1
+SK,Slovakia,1
+TH,Thailand,1
