@@ -25,27 +25,62 @@ from elxr_metrics.elxr_org_trend import _country_lookup, parse_elxr_org_logs
         ("TimeBucket,ViewCount,UniqueUser"),
     ],
 )
-def test_parse_trend(tmp_path, init_content):
-    """test parsing log"""
+def test_parse_trend_init_content(tmp_path, init_content):
+    """test parsing log with different initial content"""
     path = Path(__file__).parent / "logs" / "elxr_org"
     csv_file = tmp_path / "elxr_org_view.csv"
     if init_content is not None:
         csv_file.write_text(init_content)
-    parse_elxr_org_logs(path, csv_file)
-    expected = [
-        (datetime.datetime(2074, 9, 22, 18, 0), 3, 2),
-        (datetime.datetime(2074, 9, 25, 18, 0), 3, 2),
-    ]
-    actual = duckdb.read_csv(csv_file).fetchall()
-    assert set(expected) <= set(actual)
 
+    # First parse
     parse_elxr_org_logs(path, csv_file)
-    expected = [
-        (datetime.datetime(2074, 9, 22, 18, 0), 6, 4),
-        (datetime.datetime(2074, 9, 25, 18, 0), 6, 4),
-    ]
-    actual = duckdb.read_csv(csv_file).fetchall()
-    assert set(expected) <= set(actual)
+    df = duckdb.read_csv(csv_file)
+    actual = df.fetchall()
+    actual_set = set(actual)
+
+    # Verify first parse results
+    assert len(actual) > 0
+    assert (datetime.datetime(2074, 9, 22, 18, 0), 3, 2) in actual_set
+    assert (datetime.datetime(2074, 9, 25, 18, 0), 3, 2) in actual_set
+
+    # Second parse - should double the counts
+    parse_elxr_org_logs(path, csv_file)
+    df = duckdb.read_csv(csv_file)
+    actual = df.fetchall()
+    actual_set = set(actual)
+
+    # Verify counts doubled after second parse
+    assert (datetime.datetime(2074, 9, 22, 18, 0), 6, 4) in actual_set
+    assert (datetime.datetime(2074, 9, 25, 18, 0), 6, 4) in actual_set
+
+
+def test_parse_trend_log(tmp_path):
+    """test parsing log"""
+    path = Path(__file__).parent / "logs" / "elxr_org"
+    csv_file = tmp_path / "elxr_org_view.csv"
+
+    # First parse
+    parse_elxr_org_logs(path, csv_file)
+    df = duckdb.read_csv(csv_file)
+    actual = df.fetchall()
+
+    # Verify first parse results
+    assert len(actual) > 0
+    # Convert actual results to a set of tuples for comparison
+    actual_set = set(actual)
+    # Verify specific expected entries exist
+    assert (datetime.datetime(2074, 9, 22, 18, 0), 3, 2) in actual_set
+    assert (datetime.datetime(2074, 9, 25, 18, 0), 3, 2) in actual_set
+
+    # Second parse - should double the counts
+    parse_elxr_org_logs(path, csv_file)
+    df = duckdb.read_csv(csv_file)
+    actual = df.fetchall()
+    actual_set = set(actual)
+
+    # Verify counts doubled after second parse
+    assert (datetime.datetime(2074, 9, 22, 18, 0), 6, 4) in actual_set
+    assert (datetime.datetime(2074, 9, 25, 18, 0), 6, 4) in actual_set
 
 
 @pytest.mark.parametrize(

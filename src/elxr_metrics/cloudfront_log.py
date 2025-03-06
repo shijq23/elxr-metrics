@@ -99,11 +99,11 @@ def _to_object(value: str, field: Field):  # noqa: C901 # pylint: disable=too-ma
     if field_type == "datetime.datetime":
         return _to_datetime(value)
     if field_type == "datetime.date":
-        return datetime.date.fromisoformat(value)
+        return datetime.date.fromisoformat(value)  # if isinstance(value, str) else value
     if field_type == "datetime.time":
         return datetime.time.fromisoformat(value).replace(tzinfo=datetime.timezone.utc)
     if field_type == "list[str]":
-        return value.split(",")
+        return value.split(",") if value else [""]
     raise ValueError(f"unhandled value:type {value}:{field_type}")
 
 
