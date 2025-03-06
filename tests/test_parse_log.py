@@ -93,7 +93,7 @@ def test_timestamp_property_with_none():
 
 @pytest.mark.parametrize(
     "path",
-    [("A65ZZCR5KMGAR8.2024-10-01-18.2d243ee0.gz")],
+    ["A65ZZCR5KMGAR8.2024-10-01-18.2d243ee0.gz"],
 )
 def test_parse_log(path):
     """test parsing log"""
@@ -169,6 +169,27 @@ def test_parse_log_empty_file(tmp_path):
         ("2024-01-01T00:00:00", datetime.datetime(2024, 1, 1, 0, 0, 0, tzinfo=datetime.timezone.utc)),
         ("2024-12-31T23:59:59Z", datetime.datetime(2024, 12, 31, 23, 59, 59, tzinfo=datetime.timezone.utc)),
         ("2024-02-29T15:30:45", datetime.datetime(2024, 2, 29, 15, 30, 45, tzinfo=datetime.timezone.utc)),  # Leap year
+        ("2024-12-31", datetime.datetime(2024, 12, 31, 0, 0, 0, tzinfo=datetime.timezone.utc)),  # partial
+        (
+            "2023-10-27T10:30:00.123456Z",
+            datetime.datetime(2023, 10, 27, 10, 30, 0, 123456, tzinfo=datetime.timezone.utc),
+        ),  # Microseconds
+        (
+            "2023-10-27T10:30:00.123456",
+            datetime.datetime(2023, 10, 27, 10, 30, 0, 123456, tzinfo=datetime.timezone.utc),
+        ),  # Microseconds without Z
+        (
+            "2023-10-27T10:30:00.123456+00:00",
+            datetime.datetime(2023, 10, 27, 10, 30, 0, 123456, tzinfo=datetime.timezone.utc),
+        ),  # Microseconds with timezone
+        (
+            "2023-10-27T10:30:00.123456-05:00",
+            datetime.datetime(2023, 10, 27, 10, 30, 0, 123456, tzinfo=datetime.timezone.utc),
+        ),  # Microseconds with timezone
+        (
+            "2023-10-27T10:30:00.123456+05:30",
+            datetime.datetime(2023, 10, 27, 10, 30, 0, 123456, tzinfo=datetime.timezone.utc),
+        ),  # Microseconds with timezone
     ],
 )
 def test_to_datetime(input_str, expected_datetime):

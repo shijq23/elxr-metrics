@@ -72,7 +72,7 @@ def _to_cookie(value: str) -> dict[str, str]:
     """convert str to dictionary."""
     cookie = cookies.SimpleCookie()
     cookie.load(rawdata=value)
-    return {urllib.parse.unquote(key): morsel.value for key, morsel in cookie.items()}
+    return {urllib.parse.unquote(key): urllib.parse.unquote(morsel.value) for key, morsel in cookie.items()}
 
 
 def _to_object(value: str, field: Field):  # noqa: C901 # pylint: disable=too-many-return-statements
