@@ -1,31 +1,34 @@
 Code,Name,Count
-SG,Singapore,694
-US,United States,512
-CH,Switzerland,497
-FR,France,238
-CN,China,42
-JP,Japan,39
-DE,Germany,28
-IE,Ireland,22
-KR,South Korea,22
-NL,The Netherlands,20
-GB,United Kingdom,16
-HK,Hong Kong,13
-SE,Sweden,12
-IN,India,11
-CA,Canada,8
-IT,Italy,7
-RU,Russia,6
-TW,Taiwan,4
-BR,Brazil,3
-DK,Denmark,3
-GH,Ghana,3
-MY,Malaysia,3
-ZA,South Africa,3
-MX,Mexico,2
-NZ,New Zealand,2
+IE,Ireland,768
+SG,Singapore,664
+US,United States,557
+CN,China,83
+DE,Germany,59
+GB,United Kingdom,55
+SE,Sweden,34
+KR,South Korea,32
+JP,Japan,26
+CA,Canada,20
+RU,Russia,14
+KH,Cambodia,10
+NL,The Netherlands,10
+GH,Ghana,8
+BR,Brazil,7
+AT,Austria,6
+IN,India,4
+AU,Australia,3
+RO,Romania,3
+TW,Taiwan,3
+EE,Estonia,2
+FR,France,2
+ID,Indonesia,2
+TR,Türkiye,2
 BG,Bulgaria,1
-ID,Indonesia,1
+CR,Costa Rica,1
+ES,Spain,1
+HK,Hong Kong,1
+IT,Italy,1
 MD,Moldova,1
-RS,Serbia,1
+PH,Philippines,1
+SC,Seychelles,1
 UA,Ukraine,1
