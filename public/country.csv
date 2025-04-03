@@ -1,34 +1,39 @@
 Code,Name,Count
-US,United States,563
-GB,United Kingdom,47
-DE,Germany,31
-NL,The Netherlands,31
-CA,Canada,29
-CN,China,28
-JP,Japan,22
-RO,Romania,16
+US,United States,569
+DE,Germany,48
+NL,The Netherlands,38
+CR,Costa Rica,35
+CN,China,23
+GB,United Kingdom,20
+JP,Japan,20
+SE,Sweden,19
+KR,South Korea,18
+PL,Poland,13
 SG,Singapore,13
-KR,South Korea,11
-AU,Australia,8
-ES,Spain,7
-IN,India,6
-NO,Norway,6
-RU,Russia,6
-BR,Brazil,4
-CR,Costa Rica,4
-HK,Hong Kong,4
-IR,Iran,4
-CH,Switzerland,3
-FR,France,3
-IL,Israel,3
-SE,Sweden,3
-AT,Austria,2
-BE,Belgium,2
-CL,Chile,2
-FI,Finland,2
-IT,Italy,2
-ID,Indonesia,1
+IN,India,12
+RU,Russia,10
+TW,Taiwan,10
+ID,Indonesia,6
+PR,Puerto Rico,6
+CA,Canada,5
+DZ,Algeria,5
+IE,Ireland,5
+AR,Argentina,4
+LT,Lithuania,4
+SC,Seychelles,4
+AT,Austria,3
+BG,Bulgaria,2
+FR,France,2
+HK,Hong Kong,2
+KH,Cambodia,2
+MD,Moldova,2
+RS,Serbia,2
+UA,Ukraine,2
+AU,Australia,1
+CL,Chile,1
+CO,Colombia,1
+CZ,Czechia,1
+FI,Finland,1
+IT,Italy,1
+MX,Mexico,1
 PH,Philippines,1
-PL,Poland,1
-SK,Slovakia,1
-UA,Ukraine,1
