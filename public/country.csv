@@ -1,39 +1,37 @@
 Code,Name,Count
-US,United States,569
-DE,Germany,48
-NL,The Netherlands,38
-CR,Costa Rica,35
-CN,China,23
-GB,United Kingdom,20
-JP,Japan,20
-SE,Sweden,19
-KR,South Korea,18
-PL,Poland,13
-SG,Singapore,13
-IN,India,12
-RU,Russia,10
-TW,Taiwan,10
-ID,Indonesia,6
-PR,Puerto Rico,6
-CA,Canada,5
-DZ,Algeria,5
-IE,Ireland,5
-AR,Argentina,4
-LT,Lithuania,4
-SC,Seychelles,4
-AT,Austria,3
-BG,Bulgaria,2
-FR,France,2
-HK,Hong Kong,2
-KH,Cambodia,2
-MD,Moldova,2
-RS,Serbia,2
-UA,Ukraine,2
-AU,Australia,1
-CL,Chile,1
-CO,Colombia,1
-CZ,Czechia,1
-FI,Finland,1
-IT,Italy,1
+US,United States,3014
+CN,China,49
+DE,Germany,23
+TW,Taiwan,20
+GB,United Kingdom,18
+NL,The Netherlands,16
+KR,South Korea,13
+SG,Singapore,12
+JP,Japan,10
+FR,France,9
+SE,Sweden,8
+AT,Austria,7
+RU,Russia,7
+BR,Brazil,6
+CA,Canada,6
+CR,Costa Rica,6
+IT,Italy,6
+BA,Bosnia and Herzegovina,5
+IN,India,5
+HK,Hong Kong,4
+UA,Ukraine,4
+BG,Bulgaria,3
+FI,Finland,3
+CH,Switzerland,2
+GT,Guatemala,2
+ID,Indonesia,2
+IR,Iran,2
+PL,Poland,2
+ZA,South Africa,2
+IE,Ireland,1
+LV,Latvia,1
 MX,Mexico,1
 PH,Philippines,1
+PT,Portugal,1
+SC,Seychelles,1
+SI,Slovenia,1
