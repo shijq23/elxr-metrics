@@ -1,37 +1,52 @@
 Code,Name,Count
-US,United States,3014
-CN,China,49
-DE,Germany,23
-TW,Taiwan,20
-GB,United Kingdom,18
-NL,The Netherlands,16
-KR,South Korea,13
-SG,Singapore,12
-JP,Japan,10
-FR,France,9
-SE,Sweden,8
-AT,Austria,7
-RU,Russia,7
-BR,Brazil,6
-CA,Canada,6
-CR,Costa Rica,6
+US,United States,12257
+GB,United Kingdom,920
+CN,China,214
+NL,The Netherlands,78
+SG,Singapore,68
+DE,Germany,65
+TW,Taiwan,62
+CA,Canada,54
+FR,France,37
+ID,Indonesia,34
+IN,India,29
+RU,Russia,29
+BR,Brazil,26
+KR,South Korea,25
+RO,Romania,23
+CH,Switzerland,21
+PL,Poland,20
+SE,Sweden,14
+IE,Ireland,13
+JP,Japan,12
+MD,Moldova,10
+FI,Finland,9
+SC,Seychelles,9
+AE,United Arab Emirates,8
+HK,Hong Kong,8
+PT,Portugal,8
+AT,Austria,6
+BG,Bulgaria,6
 IT,Italy,6
-BA,Bosnia and Herzegovina,5
-IN,India,5
-HK,Hong Kong,4
-UA,Ukraine,4
-BG,Bulgaria,3
-FI,Finland,3
-CH,Switzerland,2
-GT,Guatemala,2
-ID,Indonesia,2
+ES,Spain,5
+AU,Australia,4
+UA,Ukraine,3
+DK,Denmark,2
+DO,Dominican Republic,2
+IQ,Iraq,2
 IR,Iran,2
-PL,Poland,2
-ZA,South Africa,2
-IE,Ireland,1
-LV,Latvia,1
-MX,Mexico,1
-PH,Philippines,1
-PT,Portugal,1
-SC,Seychelles,1
+LV,Latvia,2
+MN,Mongolia,2
+MX,Mexico,2
+PH,Philippines,2
+TR,Türkiye,2
+BE,Belgium,1
+CR,Costa Rica,1
+CZ,Czechia,1
+GR,Greece,1
+GT,Guatemala,1
+MK,North Macedonia,1
+MY,Malaysia,1
 SI,Slovenia,1
+VN,Vietnam,1
+ZA,South Africa,1
