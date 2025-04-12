@@ -1,34 +1,46 @@
 Code,Name,Count
-US,United States,796
-SG,Singapore,644
-GB,United Kingdom,496
-CN,China,59
-NL,The Netherlands,42
-IE,Ireland,30
-DE,Germany,25
-IN,India,24
-SE,Sweden,20
-BR,Brazil,10
-SC,Seychelles,10
-FR,France,9
-JP,Japan,9
-TW,Taiwan,8
-CA,Canada,5
-KR,South Korea,5
-ES,Spain,4
-CR,Costa Rica,3
-GR,Greece,3
-NO,Norway,3
-RU,Russia,3
-AT,Austria,2
+US,United States,605
+NL,The Netherlands,67
+IE,Ireland,57
+CN,China,46
+DE,Germany,33
+FR,France,24
+BR,Brazil,21
+CH,Switzerland,21
+CA,Canada,19
+IN,India,19
+PL,Poland,17
+SG,Singapore,14
+SE,Sweden,12
+KR,South Korea,9
+ID,Indonesia,6
+CR,Costa Rica,5
+MX,Mexico,5
+FI,Finland,4
+HK,Hong Kong,4
+PT,Portugal,4
+CZ,Czechia,3
+DK,Denmark,3
+IT,Italy,3
+JP,Japan,3
+AU,Australia,2
 BE,Belgium,2
-CO,Colombia,2
-CZ,Czechia,2
-MX,Mexico,2
+CL,Chile,2
+EG,Egypt,2
+GB,United Kingdom,2
+GH,Ghana,2
+SV,El Salvador,2
+ZA,South Africa,2
+AL,Albania,1
 BG,Bulgaria,1
-HK,Hong Kong,1
+BW,Botswana,1
+HU,Hungary,1
 MD,Moldova,1
-PL,Poland,1
+MY,Malaysia,1
+NO,Norway,1
+PH,Philippines,1
 RO,Romania,1
-SV,El Salvador,1
+SA,Saudi Arabia,1
+TW,Taiwan,1
 UA,Ukraine,1
+VN,Vietnam,1
