@@ -1,46 +1,36 @@
 Code,Name,Count
-US,United States,605
-NL,The Netherlands,67
-IE,Ireland,57
-CN,China,46
-DE,Germany,33
-FR,France,24
-BR,Brazil,21
-CH,Switzerland,21
-CA,Canada,19
-IN,India,19
-PL,Poland,17
-SG,Singapore,14
-SE,Sweden,12
-KR,South Korea,9
-ID,Indonesia,6
-CR,Costa Rica,5
-MX,Mexico,5
-FI,Finland,4
-HK,Hong Kong,4
-PT,Portugal,4
-CZ,Czechia,3
-DK,Denmark,3
-IT,Italy,3
-JP,Japan,3
-AU,Australia,2
-BE,Belgium,2
-CL,Chile,2
-EG,Egypt,2
-GB,United Kingdom,2
-GH,Ghana,2
-SV,El Salvador,2
-ZA,South Africa,2
-AL,Albania,1
-BG,Bulgaria,1
-BW,Botswana,1
-HU,Hungary,1
+US,United States,471
+IE,Ireland,126
+SG,Singapore,102
+NL,The Netherlands,89
+GB,United Kingdom,67
+CN,China,31
+DE,Germany,30
+JP,Japan,16
+PL,Poland,13
+VN,Vietnam,12
+BR,Brazil,10
+AU,Australia,7
+CA,Canada,7
+FR,France,7
+RU,Russia,6
+IN,India,4
+KR,South Korea,4
+SC,Seychelles,4
+SE,Sweden,4
+FI,Finland,3
+GR,Greece,3
+HK,Hong Kong,3
+RO,Romania,3
+DK,Denmark,2
+IT,Italy,2
+LT,Lithuania,2
+TR,Türkiye,2
+AR,Argentina,1
+AT,Austria,1
+CH,Switzerland,1
+CZ,Czechia,1
+ES,Spain,1
 MD,Moldova,1
-MY,Malaysia,1
-NO,Norway,1
-PH,Philippines,1
-RO,Romania,1
-SA,Saudi Arabia,1
 TW,Taiwan,1
 UA,Ukraine,1
-VN,Vietnam,1
