@@ -3,8 +3,8 @@ elxr-12.7.0.0-amd64-CD-1.iso,459
 elxr-iso-1726065612.035066.iso,279
 elxr-12.6.1.0-amd64-CD-1.iso,231
 elxr-edge-12.7.0.0-amd64.iso,217
-elxr-12.9.0.0-amd64-NETINST-1.iso,73
-elxr-edge-12.9.0.0-amd64.iso,53
+elxr-12.9.0.0-amd64-NETINST-1.iso,76
+elxr-edge-12.9.0.0-amd64.iso,56
 elxr-minimal-ostree-imx-12.7.0.0-arm64.img.zst,47
 elxr-tegra-12.7.0.0-arm64.tar.gz,45
 elxr-tegra-12.7.0.0-arm64.img.zst,43
@@ -13,7 +13,7 @@ elxr-cloud-amd64-12.7.0.0-amd64.qcow2,35
 elxr-minimal-ostree-imx8-0.1-arm64.img.zst,30
 elxr-tegra-12.6.1.0.tar.gz,25
 elxr-12-amd64-CD-1.iso,22
-elxr-minimal-ostree-imx-12.9.0.0-arm64.img.zst,16
+elxr-minimal-ostree-imx-12.9.0.0-arm64.img.zst,17
 elxr-tegra-12.6.1.0-arm64.img.zst,15
 elxr-12.0.1-amd64-CD-1.iso,13
 elxr-tegra-12.9.0.0-arm64.img.zst,4
