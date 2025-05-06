@@ -1,46 +1,19 @@
 Code,Name,Count
-IE,Ireland,3233
-US,United States,2530
-SG,Singapore,1281
-NL,The Netherlands,213
-CN,China,165
-GB,United Kingdom,147
-DE,Germany,87
-CA,Canada,56
-FR,France,48
-RU,Russia,26
-SE,Sweden,22
-TW,Taiwan,21
-BR,Brazil,18
-ID,Indonesia,18
-IN,India,18
-CH,Switzerland,14
-TR,Türkiye,14
-IT,Italy,11
-JP,Japan,10
-AU,Australia,9
-KR,South Korea,9
-HK,Hong Kong,8
-PT,Portugal,8
-MX,Mexico,5
-PL,Poland,5
-AR,Argentina,4
-AT,Austria,3
-EE,Estonia,3
-ZA,South Africa,3
-AE,United Arab Emirates,2
-BD,Bangladesh,2
+US,United States,194
+SG,Singapore,68
+CN,China,15
+FR,France,7
+GB,United Kingdom,3
+GH,Ghana,3
 BE,Belgium,2
-CR,Costa Rica,2
-ES,Spain,2
-IQ,Iraq,2
-LV,Latvia,2
-MD,Moldova,2
-PH,Philippines,2
-DZ,Algeria,1
-EG,Egypt,1
-GR,Greece,1
-HU,Hungary,1
-LT,Lithuania,1
-MY,Malaysia,1
-TH,Thailand,1
+CA,Canada,2
+JP,Japan,2
+NL,The Netherlands,2
+RU,Russia,2
+SC,Seychelles,2
+AT,Austria,1
+BR,Brazil,1
+CR,Costa Rica,1
+DE,Germany,1
+ES,Spain,1
+ID,Indonesia,1
