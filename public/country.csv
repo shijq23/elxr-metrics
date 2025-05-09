@@ -1,34 +1,37 @@
 Code,Name,Count
-GB,United Kingdom,1970
-US,United States,491
-CA,Canada,160
-SG,Singapore,66
-CN,China,59
-NL,The Netherlands,44
-IE,Ireland,22
-SE,Sweden,15
-BE,Belgium,8
-DE,Germany,8
-FR,France,8
-JP,Japan,8
-KR,South Korea,8
-GH,Ghana,7
-IN,India,7
-TW,Taiwan,7
-BR,Brazil,5
-HK,Hong Kong,4
-CR,Costa Rica,3
-IT,Italy,3
-TR,Türkiye,3
-CH,Switzerland,2
-FI,Finland,2
-ID,Indonesia,2
+GB,United Kingdom,1492
+US,United States,523
+CN,China,47
+NL,The Netherlands,26
+FR,France,17
+IE,Ireland,16
+IN,India,15
+DE,Germany,12
+AT,Austria,11
+CR,Costa Rica,11
+RU,Russia,11
+CA,Canada,10
+SG,Singapore,7
+SY,Syria,7
+ID,Indonesia,6
+SC,Seychelles,6
+IT,Italy,5
+JP,Japan,5
+SE,Sweden,5
+TR,Türkiye,4
+TW,Taiwan,4
+HK,Hong Kong,3
+RO,Romania,3
+AE,United Arab Emirates,2
+BG,Bulgaria,2
+IL,Israel,2
+KR,South Korea,2
+KZ,Kazakhstan,2
 MY,Malaysia,2
-RU,Russia,2
-AE,United Arab Emirates,1
-AT,Austria,1
-AU,Australia,1
-JM,Jamaica,1
+UA,Ukraine,2
+BD,Bangladesh,1
+FI,Finland,1
+IR,Iran,1
 MD,Moldova,1
-PH,Philippines,1
 PT,Portugal,1
+TH,Thailand,1
