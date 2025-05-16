@@ -1,36 +1,40 @@
 Code,Name,Count
-IE,Ireland,780
-US,United States,581
-SG,Singapore,175
-CN,China,160
-DE,Germany,68
-JP,Japan,67
-NL,The Netherlands,43
-CA,Canada,40
-GB,United Kingdom,26
-HK,Hong Kong,18
-RO,Romania,16
-BR,Brazil,14
-IN,India,13
-TR,Türkiye,11
-IT,Italy,10
-HU,Hungary,9
-FR,France,8
-ES,Spain,6
-IR,Iran,6
-KR,South Korea,6
-TN,Tunisia,5
-RU,Russia,3
-AU,Australia,2
-DK,Denmark,2
-EE,Estonia,2
-FI,Finland,2
-AR,Argentina,1
-CR,Costa Rica,1
+IE,Ireland,4233
+US,United States,610
+GB,United Kingdom,96
+JP,Japan,57
+NL,The Netherlands,53
+CN,China,29
+DE,Germany,26
+RU,Russia,25
+CA,Canada,21
+TR,Türkiye,20
+IN,India,18
+SG,Singapore,18
+FR,France,16
+HK,Hong Kong,16
+NO,Norway,15
+SI,Slovenia,11
+AE,United Arab Emirates,10
+SE,Sweden,8
+SC,Seychelles,7
+BR,Brazil,6
+ID,Indonesia,5
+MY,Malaysia,5
+BG,Bulgaria,4
+CH,Switzerland,4
+KE,Kenya,4
+PT,Portugal,4
+AU,Australia,3
+PL,Poland,3
+RO,Romania,3
+HU,Hungary,2
+KR,South Korea,2
 CZ,Czechia,1
+ES,Spain,1
+FI,Finland,1
+KZ,Kazakhstan,1
+MA,Morocco,1
 MD,Moldova,1
-MY,Malaysia,1
-NI,Nicaragua,1
-PL,Poland,1
-PT,Portugal,1
-VN,Vietnam,1
+PE,Peru,1
+UA,Ukraine,1
