@@ -1,31 +1,49 @@
 Code,Name,Count
-US,United States,2354
-NP,Nepal,1946
-CN,China,43
-IE,Ireland,37
-NL,The Netherlands,34
-SG,Singapore,27
-FR,France,18
-CA,Canada,17
-RU,Russia,9
-BR,Brazil,8
-CH,Switzerland,5
-GB,United Kingdom,5
-SE,Sweden,5
+PK,Pakistan,1946
+US,United States,1195
+CN,China,400
+SG,Singapore,177
+NL,The Netherlands,90
+BG,Bulgaria,72
+JP,Japan,56
+IE,Ireland,41
+GB,United Kingdom,28
+FR,France,26
+BR,Brazil,20
+DE,Germany,20
+HK,Hong Kong,17
+RU,Russia,17
+SE,Sweden,16
+AE,United Arab Emirates,15
+ID,Indonesia,15
+CA,Canada,13
+KR,South Korea,13
+MK,North Macedonia,10
+CI,Ivory Coast,8
+CR,Costa Rica,7
+FI,Finland,6
+LU,Luxembourg,6
+TW,Taiwan,6
+ES,Spain,5
+PL,Poland,5
 TR,Türkiye,5
-GE,Georgia,4
-JP,Japan,4
-NO,Norway,4
-PL,Poland,4
-IN,India,3
-PT,Portugal,3
-CO,Colombia,2
-DE,Germany,2
-EE,Estonia,2
-HK,Hong Kong,2
-KR,South Korea,2
-AR,Argentina,1
-BE,Belgium,1
-ID,Indonesia,1
-LV,Latvia,1
+IT,Italy,4
+NG,Nigeria,4
+SC,Seychelles,4
+CH,Switzerland,3
+DK,Denmark,3
+MD,Moldova,3
+VN,Vietnam,3
+AR,Argentina,2
+AT,Austria,2
+AZ,Azerbaijan,2
+BE,Belgium,2
+HU,Hungary,2
+IN,India,2
+SK,Slovakia,2
+IQ,Iraq,1
+JO,Jordan,1
+MX,Mexico,1
+NO,Norway,1
 PH,Philippines,1
+RO,Romania,1
