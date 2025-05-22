@@ -1,49 +1,35 @@
 Code,Name,Count
-PK,Pakistan,1946
-US,United States,1195
-CN,China,400
-SG,Singapore,177
-NL,The Netherlands,90
-BG,Bulgaria,72
-JP,Japan,56
-IE,Ireland,41
-GB,United Kingdom,28
+US,United States,524
+CN,China,230
+SG,Singapore,33
+JP,Japan,29
 FR,France,26
-BR,Brazil,20
-DE,Germany,20
-HK,Hong Kong,17
-RU,Russia,17
-SE,Sweden,16
-AE,United Arab Emirates,15
-ID,Indonesia,15
-CA,Canada,13
-KR,South Korea,13
-MK,North Macedonia,10
-CI,Ivory Coast,8
-CR,Costa Rica,7
-FI,Finland,6
-LU,Luxembourg,6
-TW,Taiwan,6
-ES,Spain,5
-PL,Poland,5
+DE,Germany,23
+NL,The Netherlands,20
+CA,Canada,15
+IE,Ireland,14
+RO,Romania,12
+GB,United Kingdom,11
+BR,Brazil,8
+VE,Venezuela,8
+PL,Poland,7
+RU,Russia,7
+AE,United Arab Emirates,6
+BG,Bulgaria,6
+HK,Hong Kong,6
+IN,India,6
+KR,South Korea,5
+MY,Malaysia,5
+SE,Sweden,5
 TR,Türkiye,5
-IT,Italy,4
-NG,Nigeria,4
-SC,Seychelles,4
-CH,Switzerland,3
-DK,Denmark,3
-MD,Moldova,3
-VN,Vietnam,3
-AR,Argentina,2
-AT,Austria,2
-AZ,Azerbaijan,2
-BE,Belgium,2
-HU,Hungary,2
-IN,India,2
-SK,Slovakia,2
-IQ,Iraq,1
-JO,Jordan,1
+ID,Indonesia,3
+IT,Italy,2
+EE,Estonia,1
+ES,Spain,1
+FI,Finland,1
 MX,Mexico,1
-NO,Norway,1
-PH,Philippines,1
-RO,Romania,1
+PT,Portugal,1
+RE,Réunion,1
+SC,Seychelles,1
+TH,Thailand,1
+TW,Taiwan,1
