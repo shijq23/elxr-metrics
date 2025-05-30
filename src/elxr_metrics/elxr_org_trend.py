@@ -43,26 +43,33 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
         );"""
         )
         if not csv_file.exists():
+            # Create empty CSV with header if it doesn't exist
+            # COPY (SELECT * FROM trend LIMIT 0) TO ? WITH (...) is tricky as table might not exist or be empty for header.
+            # DuckDB creates the file if it doesn't exist with COPY TO.
+            # For an empty initial file, we can just let the first COPY TO after yield handle it,
+            # or ensure it has headers if we load from it.
+            # The new db_utils handles empty input CSVs gracefully by not trying to copy from them.
+            # However, this module uses its own context manager.
+            # For now, let's assume if csv_file doesn't exist, it will be created by the final COPY TO.
+            # The check `csv_file.stat().st_size > 31` handles empty/non-existent files for COPY FROM.
+            pass # No explicit creation, will be handled by COPY TO or if it's empty, COPY FROM will skip.
+
+        if csv_file.exists() and csv_file.stat().st_size > 31:  # expect header "TimeBucket,ViewCount,UniqueUser"
             conn.execute(
-                f"""
-                COPY (SELECT * FROM trend LIMIT 0)
-                TO '{csv_file}'
-                WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');"""
-            )
-        if csv_file.stat().st_size > 31:  # expect header "TimeBucket,ViewCount,UniqueUser"
-            conn.execute(
-                f"""
+                """
                 COPY trend
-                FROM '{csv_file}'
-                WITH (FORMAT CSV, DELIMITER ',', HEADER);"""
+                FROM ?
+                WITH (FORMAT CSV, DELIMITER ',', HEADER);""",
+                [str(csv_file)]
             )
         yield conn
     finally:
         conn.execute(
-            f"""
+            """
             COPY (SELECT * FROM trend WHERE TimeBucket + INTERVAL 732 DAY > CURRENT_TIMESTAMP ORDER BY TimeBucket ASC)
-            TO '{csv_file}'
-            WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');"""
+            TO ?
+            WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');""",
+            [str(csv_file)]
         )
         conn.close()
 
@@ -92,7 +99,7 @@ def _process_log_entry(conn: DuckDBPyConnection, log_entry: CloudFrontLogEntry) 
         return
     t = webpage_timebucket(log_entry.timestamp)
     ts = t.strftime(r"%Y-%m-%d %H:%M:%S")
-    conn.execute(f"INSERT INTO temp_data (TimeBucket, ClientIP) values ('{ts}', '{log_entry.c_ip}');")
+    conn.execute("INSERT INTO temp_data (TimeBucket, ClientIP) values (?, ?);", [ts, log_entry.c_ip])
 
 
 @timing
