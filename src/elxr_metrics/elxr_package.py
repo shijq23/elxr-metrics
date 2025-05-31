@@ -81,7 +81,7 @@ def parse_mirror_elxr_dev_logs(log_folder: Path, csv_file: Path = MIRROR_ELXR_DE
     :raises Exception: if log_folder does not exist, not a directory.
                        if csv_file is not a file"""
     table_name = "stats" # As used in the original _update_package_download
-    table_schema = "Name VARCHAR PRIMARY KEY, Download INTEGER"
+    table_schema = "Name VARCHAR PRIMARY KEY, Download INTEGER" # Restored PRIMARY KEY
     top_n_csv_path = csv_file.parent / "package_top_10.csv"
 
     with manage_db_connection(

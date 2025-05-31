@@ -4,13 +4,11 @@ import pandas as pd
 from contextlib import contextmanager
 import re
 
-# Define known base SQL types. Types in schema strings must be one of these single words.
-# Parameters like VARCHAR(255) or DECIMAL(N,M) are not supported in the input schema_string.
-# Constraints like PRIMARY KEY must be handled separately if needed (currently not supported via schema_string).
+# Define known base SQL types. The first word of a type definition must be one of these.
 KNOWN_BASE_SQL_TYPES = {
     "VARCHAR", "INTEGER", "TEXT", "REAL", "FLOAT", "DOUBLE", "DECIMAL",
     "BLOB", "DATE", "TIMESTAMP", "BOOLEAN", "UUID", "INTERVAL",
-    # "ARRAY", "STRUCT", "MAP", "UNION", "ANY", "VARIANT" # More complex types disallowed for now
+    "ARRAY", "STRUCT", "MAP", "UNION", "ANY", "VARIANT"
 }
 
 @contextmanager
@@ -19,18 +17,17 @@ def manage_db_connection(db_name: str, table_name: str, table_schema: str, input
     Manages a DuckDB database connection, table creation, data loading, and saving.
 
     Schema Definition Rules:
-    - Column definitions are separated by commas.
+    - Column definitions are separated by commas (commas in type parameters like DECIMAL(N,M) are respected).
     - Each definition MUST be in the format: 'Name Type' or '"Quoted Name" Type'.
     - 'Name': If unquoted, must be a single valid SQL identifier (alphanumeric + underscore). No spaces.
     - '"Quoted Name"': If name contains spaces or special characters, it MUST be enclosed in double quotes.
-    - 'Type': Must be a single word from a list of known base SQL types (e.g., VARCHAR, INTEGER, FLOAT).
-              Parameterized types (e.g., VARCHAR(255)) and constraints (e.g., PRIMARY KEY) are NOT supported
-              directly in the schema string definition for simplicity.
+    - 'Type': The type definition (e.g., VARCHAR, INTEGER PRIMARY KEY, DECIMAL(10,2)). The first word
+              of the type definition must be a known base SQL type.
 
     Args:
         db_name (str): The name of the database.
         table_name (str): The name of the table to create.
-        table_schema (str): Schema string, e.g., 'ID INTEGER, Name VARCHAR, Value FLOAT, "User Comments" TEXT'.
+        table_schema (str): Schema string, e.g., 'ID INTEGER PRIMARY KEY, Name VARCHAR, Value FLOAT'.
         input_csv_path (str): Path to the input CSV. Loaded if exists and not empty.
         output_csv_path (str): Path to save the full table data.
         top_n_csv_path (str): Path to save the top N rows.
@@ -43,8 +40,8 @@ def manage_db_connection(db_name: str, table_name: str, table_schema: str, input
         con = duckdb.connect(database=db_name, read_only=False)
 
         cols_processed = []
-        # Simpler split by comma, as types like DECIMAL(N,M) are disallowed in schema string.
-        col_defs_list = table_schema.split(',')
+        # Split schema by comma, but not commas inside parentheses
+        col_defs_list = re.split(r',(?![^\(]*\))', table_schema)
 
         for col_def_str in col_defs_list:
             col_def_str = col_def_str.strip()
@@ -53,22 +50,26 @@ def manage_db_connection(db_name: str, table_name: str, table_schema: str, input
             name_part_final = ""
             type_part_final = ""
 
-            # Regex: Group 1 for quoted name content, Group 2 for unquoted single-word name, Group 3 for single-word type.
-            match = re.match(r'^\s*(?:"([^"]+)"|([a-zA-Z0-9_]+))\s+([a-zA-Z0-9_]+)\s*$', col_def_str)
+            # Regex: Group 1 for quoted name content, Group 2 for unquoted single-word name, Group 3 for the rest (type and constraints).
+            match = re.match(r'^\s*(?:"([^"]+)"|([a-zA-Z0-9_]+))\s+(.+)\s*$', col_def_str)
 
             if match:
-                type_candidate = match.group(3).upper()
-                if type_candidate not in KNOWN_BASE_SQL_TYPES:
-                    raise ValueError(f"Invalid or unsupported type '{match.group(3)}' in definition: '{col_def_str}'. Type must be one of {KNOWN_BASE_SQL_TYPES}.")
-
-                type_part_final = type_candidate # Use the uppercased, validated type
-
                 if match.group(1): # Quoted name: "User Name"
                     name_part_final = f'"{match.group(1)}"'
                 else: # Unquoted name: Name
-                    name_part_final = match.group(2)
+                    name_part_final = match.group(2) # This is a single word
+
+                type_part_final = match.group(3).strip()
+
+                if not type_part_final:
+                    raise ValueError(f"Type information is missing for column '{name_part_final}' in definition: '{col_def_str}'")
+
+                # Validate the beginning of type_part_final
+                base_type_candidate = type_part_final.split(" ", 1)[0].split("(",1)[0].upper()
+                if base_type_candidate not in KNOWN_BASE_SQL_TYPES:
+                    raise ValueError(f"Invalid or unrecognized base type '{base_type_candidate}' for column '{name_part_final}' in definition: '{col_def_str}'. If column name has spaces and was intended as part of name, please quote it (e.g., '\"{name_part_final} {base_type_candidate}\" ...').")
             else:
-                raise ValueError(f"Invalid column definition format: '{col_def_str}'. Expected 'Name TYPE' or '\"Quoted Name\" TYPE' (e.g., 'ID INTEGER', '\"My Column\" VARCHAR'). Type must be a single recognized word.")
+                raise ValueError(f"Invalid column definition format: '{col_def_str}'. Expected 'Name Type' or '\"Quoted Name\" Type'. Unquoted names must be single words, and type information is mandatory.")
 
             cols_processed.append(f'{name_part_final} {type_part_final}')
 
@@ -96,7 +97,7 @@ def manage_db_connection(db_name: str, table_name: str, table_schema: str, input
                 if columns_desc:
                     order_by_column_for_top_n = columns_desc[0][0]
 
-                potential_order_columns = [col[0] for col in columns_desc if col[1].upper() in ('INTEGER', 'BIGINT', 'FLOAT', 'DOUBLE', 'DECIMAL', 'NUMERIC')] # Keep DECIMAL/NUMERIC here as internal types
+                potential_order_columns = [col[0] for col in columns_desc if col[1].upper() in ('INTEGER', 'BIGINT', 'FLOAT', 'DOUBLE', 'DECIMAL', 'NUMERIC')]
 
                 if potential_order_columns:
                     order_by_column_for_top_n = potential_order_columns[0]

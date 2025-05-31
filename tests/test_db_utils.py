@@ -391,10 +391,11 @@ def test_unquoted_schema_with_spaces_util_handles_it(tmp_path):
         ) as conn:
             pass # Should not reach here if ValueError is raised during schema parsing
 
-    # Check that the specific error for invalid column format (due to unquoted multi-word name) is raised.
+    # Check for relevant error messages from db_utils schema parsing for "User Name VARCHAR"
     error_msg = str(excinfo.value).lower()
-    assert "invalid column definition format" in error_msg
-    assert "user name varchar" in error_msg # Check that the problematic definition is mentioned
+    assert ("invalid column definition format" in error_msg or \
+            "invalid or unrecognized base type" in error_msg)
+    assert "user name varchar" in error_msg # Ensure the problematic definition is mentioned
 
 
 def test_primary_key_in_ordering_heuristic(tmp_path):

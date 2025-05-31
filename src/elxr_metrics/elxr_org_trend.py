@@ -56,20 +56,18 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
 
         if csv_file.exists() and csv_file.stat().st_size > 31:  # expect header "TimeBucket,ViewCount,UniqueUser"
             conn.execute(
-                """
+                    f"""
                 COPY trend
-                FROM ?
-                WITH (FORMAT CSV, DELIMITER ',', HEADER);""",
-                [str(csv_file)]
+                    FROM '{str(csv_file)}'
+                    WITH (FORMAT CSV, DELIMITER ',', HEADER);"""
             )
         yield conn
     finally:
         conn.execute(
-            """
+            f"""
             COPY (SELECT * FROM trend WHERE TimeBucket + INTERVAL 732 DAY > CURRENT_TIMESTAMP ORDER BY TimeBucket ASC)
-            TO ?
-            WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');""",
-            [str(csv_file)]
+            TO '{str(csv_file)}'
+            WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');"""
         )
         conn.close()
 

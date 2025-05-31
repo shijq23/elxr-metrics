@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import datetime
 import gzip
+import logging # Added
 import urllib.parse
 from dataclasses import Field, dataclass, fields
 from http import cookies
@@ -122,21 +123,42 @@ def parse_cloudfront_log(file_path: Path) -> Generator[CloudFrontLogEntry, Any, 
     """
 
     model_fields = fields(CloudFrontLogEntry)
+    logger = logging.getLogger(__name__) # Added logger instance
     # Open and read .gz files
     with gzip.open(file_path, "rt", encoding="utf-8") as file:  # 'rt' mode for reading text
-        for line in file:
+        for line_number, line_content in enumerate(file, 1): # Added line_number for logging
             # Skip comments or empty lines
-            line = line.strip()
+            line = line_content.strip()
             if line.startswith("#") or not line:
                 continue
-            # Split the line into columns
-            col = line.split("\t")
 
-            yield CloudFrontLogEntry(
-                *[_to_object(value, field) for value, field in zip(col, model_fields)]  # type: ignore[valid-type]
-            )
+            col = line.split("\t")
+            try:
+                # Check if number of columns matches expected number of fields
+                if len(col) != len(model_fields):
+                    # Log warning and skip if column count mismatch (potential IndexError otherwise)
+                    logger.warning(
+                        f"Skipping malformed log entry at line {line_number} due to column count mismatch. "
+                        f"Expected {len(model_fields)}, got {len(col)}. Line: {line[:150]}..."
+                    )
+                    continue
+
+                entry_values = []
+                for value, field in zip(col, model_fields):
+                    entry_values.append(_to_object(value, field))
+
+                yield CloudFrontLogEntry(*entry_values) # type: ignore[valid-type]
+
+            except (ValueError, IndexError) as e: # Catch ValueError from _to_object or IndexError from zip (less likely now)
+                logger.warning(
+                    f"Skipping malformed log entry at line {line_number} due to '{e}'. Line: {line[:150]}..."
+                )
+                continue
 
 
 def webpage_timebucket(t: datetime.datetime):
-    """put timestamp in 4 time buckets (6 hour interval)"""
+    """
+    Buckets timestamps into 6-hour intervals (00-05, 06-11, 12-17, 18-23)
+    for trend analysis, aligning with broad daily phases.
+    """
     return t.replace(hour=t.hour // 6 * 6, second=0, microsecond=0, minute=0, tzinfo=datetime.timezone.utc)
