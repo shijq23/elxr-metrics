@@ -54,7 +54,7 @@ def main(args: list[str] | None = None) -> int:
     It requires 3 command line argument:
     log_path -- the log file directory
     csv_path -- the csv file to load and store
-    log_type -- the log type, one of elxr_org_view, package_download
+    log_type -- the log type, one of elxr_org_view, package_download, image_download
     """
     if args is None:
         args = sys.argv[1:]

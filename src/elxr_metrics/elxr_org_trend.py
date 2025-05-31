@@ -8,11 +8,14 @@
 
 from __future__ import annotations
 
+import logging
 from contextlib import contextmanager
+from functools import cache
 from pathlib import Path
 from typing import Any, Generator
 
 import duckdb
+import maxminddb
 from duckdb import DuckDBPyConnection
 
 from elxr_metrics.cloudfront_log import CloudFrontLogEntry, parse_cloudfront_log, webpage_timebucket
@@ -20,9 +23,12 @@ from elxr_metrics.elapsed import timing
 
 ELXR_ORG_VIEW_CSV = Path("public/elxr_org_view.csv")
 
+logger = logging.getLogger(__name__)
+
 
 @contextmanager
 def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
+    country_file = csv_file.parent / "country.csv"
     conn = duckdb.connect(":memory:")
     try:
         conn.execute("""DROP TABLE IF EXISTS trend;""")
@@ -33,6 +39,14 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
             TimeBucket TIMESTAMP PRIMARY KEY,
             ViewCount INTEGER,
             UniqueUser INTEGER
+        );"""
+        )
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS country (
+            Code VARCHAR PRIMARY KEY,
+            Name VARCHAR,
+            Count INTEGER
         );"""
         )
         conn.execute(
@@ -64,6 +78,12 @@ def _trend(csv_file: Path) -> Generator[DuckDBPyConnection, Any, None]:
             TO '{csv_file}'
             WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');"""
         )
+        conn.execute(
+            f"""
+            COPY (SELECT * FROM country ORDER BY Count DESC, Code ASC)
+            TO '{country_file}'
+            WITH (FORMAT CSV, DELIMITER ',', HEADER, NEW_LINE e'\n');"""
+        )
         conn.close()
 
 
@@ -86,6 +106,33 @@ def _merge_elxr_org(conn: DuckDBPyConnection) -> None:
     )
 
 
+_COUNTRY_READER = maxminddb.open_database(r"GeoLite2-Country/GeoLite2-Country.mmdb")
+
+
+@cache
+def _country_lookup(ip: str) -> tuple[str, str]:
+    """
+    map IP address to country iso-code and name.
+
+    :param ip: user IP address
+    :type ip: str
+    :return: country iso-code and name, or "N/A" if not found
+    :rtype: tuple[str, str]
+    """
+    country = "N/A"
+    code = "N/A"
+    try:
+        r = _COUNTRY_READER.get(ip)
+        c = r.get("country") or r.get("registered_country")
+        code = c["iso_code"]
+        country = c["names"]["en"]
+    except Exception:  # pylint: disable=broad-except
+        pass
+    if code == "N/A":
+        logger.warning("failed to lookup country for IP: %s", ip)
+    return code, country
+
+
 def _process_log_entry(conn: DuckDBPyConnection, log_entry: CloudFrontLogEntry) -> None:
     """process the log entry and insert into temp table"""
     if log_entry.sc_content_type != "text/html":  # only count web page reviews
@@ -93,6 +140,14 @@ def _process_log_entry(conn: DuckDBPyConnection, log_entry: CloudFrontLogEntry) 
     t = webpage_timebucket(log_entry.timestamp)
     ts = t.strftime(r"%Y-%m-%d %H:%M:%S")
     conn.execute(f"INSERT INTO temp_data (TimeBucket, ClientIP) values ('{ts}', '{log_entry.c_ip}');")
+    code, name = _country_lookup(log_entry.c_ip)
+    if code == "N/A":  # no country info, skip
+        return
+    conn.execute(
+        f"""
+        INSERT INTO country (Code, Name, Count) values ('{code}', '{name}', 1)
+        ON CONFLICT (Code) DO UPDATE SET Count = country.Count + 1; """
+    )
 
 
 @timing

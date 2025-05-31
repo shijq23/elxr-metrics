@@ -7,6 +7,9 @@
     <title>eLxr Metrics</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel='stylesheet' />
+
 </head>
 
 <body>
@@ -46,9 +49,21 @@
         <div id="chart-container">
             <canvas id="my-chart"></canvas>
         </div>
-        <div id="view-download">
-            <a class="link" href="elxr_org_view.csv" download="elxr_org_view.csv" title="Download CSV Data">
+        <div>
+            <a href="elxr_org_view.csv" download="elxr_org_view.csv" title="Download CSV Data">
                 Download Site View Count Data
+            </a>
+        </div>
+        <br />
+        <br />
+        <h2>Site View Map</h2>
+        <p>The eLxr site view map is an attempt to map the location of <a href="https://elxr.org">eLxr web site</a>
+            users. This site publishes the user locations gathered from log files.
+            Every day the numbers are updated.</p>
+        <div id="tracking-map"></div>
+        <div>
+            <a href="country.csv" download="country.csv" title="Download Map Data">
+                Download Site View Map Data
             </a>
         </div>
         <br />
@@ -62,8 +77,7 @@
             <canvas id="my-chart-2"></canvas>
         </div>
         <div id="package-download">
-            <a class="link" href="package_stats.csv" download="package_stats.csv"
-                title="Download Package Statistics Data">
+            <a href="package_stats.csv" download="package_stats.csv" title="Download Package Statistics Data">
                 Download Package Statistics Data
             </a>
         </div>
@@ -78,7 +92,7 @@
             <canvas id="my-chart-3"></canvas>
         </div>
         <div id="image-download">
-            <a class="link" href="image_stats.csv" download="image_stats.csv" title="Image Download Statistics Data">
+            <a href="image_stats.csv" download="image_stats.csv" title="Image Download Statistics Data">
                 Image Download Statistics Data
             </a>
         </div>
@@ -86,6 +100,16 @@
     <div class="footer">
         <div class="ft-content">
             Website source code is available on <a href="https://gitlab.com/elxr/website/elxr-metrics">GitLab</a>.
+            <br>
+            This product includes GeoLite2 Data created by MaxMind, available from
+            <a href="https://www.maxmind.com">https://www.maxmind.com</a>.
+            <br>
+            And information sourced from Google Dataset Publishing Language, at
+            <a href="https://developers.google.com/public-data/docs/canonical/countries_csv">Countries CSV
+                Dataset</a>.
+            Licensed under CC BY 4.0.
+            <br>
+
         </div>
     </div>
     <script src="script.js"></script>

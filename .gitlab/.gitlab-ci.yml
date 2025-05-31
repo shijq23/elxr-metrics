@@ -1,0 +1,17 @@
+# This file is a template, and might need editing before it works on your project.
+# Full project: https://gitlab.com/pages/plain-html
+
+include:
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+  - template: SAST.gitlab-ci.yml
+  - local: .gitlab/.python.gitlab-ci.yml
+  - local: .gitlab/.pages.gitlab-ci.yml
+
+stages:
+  - lint
+  - build
+  - test
+  - deploy
+
+variables:
+  SAST_EXCLUDED_PATHS: venv/,logs/

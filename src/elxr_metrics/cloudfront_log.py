@@ -72,7 +72,7 @@ def _to_cookie(value: str) -> dict[str, str]:
     """convert str to dictionary."""
     cookie = cookies.SimpleCookie()
     cookie.load(rawdata=value)
-    return {urllib.parse.unquote(key): morsel.value for key, morsel in cookie.items()}
+    return {urllib.parse.unquote(key): urllib.parse.unquote(morsel.value) for key, morsel in cookie.items()}
 
 
 def _to_object(value: str, field: Field):  # noqa: C901 # pylint: disable=too-many-return-statements
@@ -99,11 +99,11 @@ def _to_object(value: str, field: Field):  # noqa: C901 # pylint: disable=too-ma
     if field_type == "datetime.datetime":
         return _to_datetime(value)
     if field_type == "datetime.date":
-        return datetime.date.fromisoformat(value)
+        return datetime.date.fromisoformat(value)  # if isinstance(value, str) else value
     if field_type == "datetime.time":
         return datetime.time.fromisoformat(value).replace(tzinfo=datetime.timezone.utc)
     if field_type == "list[str]":
-        return value.split(",")
+        return value.split(",") if value else [""]
     raise ValueError(f"unhandled value:type {value}:{field_type}")
 
 
@@ -137,6 +137,16 @@ def parse_cloudfront_log(file_path: Path) -> Generator[CloudFrontLogEntry, Any, 
             )
 
 
-def webpage_timebucket(t: datetime.datetime):
-    """put timestamp in 4 time buckets (6 hour interval)"""
+def webpage_timebucket(t: datetime.datetime) -> datetime.datetime:
+    """Put timestamp in 4 time buckets (6-hour interval).
+
+    This function takes a datetime object and return the containing timebucket.
+    The resulting datetime will have the hour set to 0, 6, 12, or 18, with minutes, seconds,
+    and microseconds set to 0, and the timezone set to UTC.
+
+    :param t: The original timestamp.
+    :type t: datetime.datetime
+    :return: The timestamp representing the containing timebucket (6-hour interval).
+    :rtype: datetime.datetime
+    """
     return t.replace(hour=t.hour // 6 * 6, second=0, microsecond=0, minute=0, tzinfo=datetime.timezone.utc)

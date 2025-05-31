@@ -72,7 +72,7 @@ def _popular_image(csv_file: Path):
         conn.close()
 
 
-_IMAGE_NAME_RE = re.compile(r"elxr-.+\.(img\.zst|tar\.gz|img|iso)$", re.ASCII)
+_IMAGE_NAME_RE = re.compile(r"elxr-.+\.(img\.zst|tar\.gz|img|iso|qcow2)$", re.ASCII)
 
 
 @cache
@@ -91,23 +91,24 @@ def _parse_image_name(path: str) -> str | None:
 
 
 def _update_image_download(conn: duckdb.DuckDBPyConnection, log_entry: CloudFrontLogEntry) -> None:
-    if log_entry.sc_content_type is None or not log_entry.sc_content_type.startswith("application/"):
-        # application/x-iso9660-image (iso)
-        # application/zstd (zst)
-        # application/x-tar (tar.gz)
-        # application/octet-stream (img)
-        # application/gzip (tar.gz)
-        return
+    # if log_entry.sc_content_type is None or not log_entry.sc_content_type.startswith("application/"):
+    #     # application/x-iso9660-image (iso)
+    #     # application/zstd (zst)
+    #     # application/x-tar (tar.gz)
+    #     # application/octet-stream (img)
+    #     # application/gzip (tar.gz)
+    #     # binary/octet-stream (qcow2)
+    #     return
     if log_entry.sc_status is None or log_entry.sc_status >= 400:
+        return
+    if log_entry.sc_bytes is None or log_entry.sc_bytes < 500000:
+        # set the minimum image size 500KB
         return
     if log_entry.x_edge_result_type is None or log_entry.x_edge_result_type in (
         "LimitExceeded",
         "CapacityExceeded",
         "Error",
     ):
-        return
-    if log_entry.sc_bytes is None or log_entry.sc_bytes < 500000:
-        # set the minimum image size 500KB
         return
     if log_entry.cs_uri_stem is None:
         return

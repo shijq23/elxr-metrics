@@ -78,7 +78,26 @@ _DEB_NAME_RE = re.compile(r"^([a-zA-Z0-9\-\+\.]+)_", re.ASCII)
 
 @cache
 def _parse_deb_name(path: str) -> str | None:
-    """Extract package name from uri path"""
+    """
+    Extract package name from a given URI path.
+
+    Parameters:
+    path (str): The URI path from which to extract the package name.
+
+    Returns:
+    str | None: The extracted package name if successful, otherwise None.
+
+    Purpose:
+    This function takes a URI path as input, extracts the file name from it, and attempts to parse the package name
+    from the file name using a regular expression. If successful, it returns the package name; otherwise, it logs a
+    warning and returns None.
+
+    Notes:
+    The function uses a regular expression to match the package name in the file name. The regular expression is
+    defined as _DEB_NAME_RE and matches one or more alphanumeric characters, hyphens, plus signs, or dots at the
+    beginning of the file name. If the match is successful, the function returns the matched package name; otherwise,
+    it logs a warning and returns None.
+    """
     # get src package name in stead of binary
     # apt-get showsrc file.deb
     # apt-get search name
@@ -94,7 +113,24 @@ def _parse_deb_name(path: str) -> str | None:
 
 
 def _update_package_download(conn: duckdb.DuckDBPyConnection, log_entry: CloudFrontLogEntry) -> None:
-    if log_entry.sc_content_type != "application/vnd.debian.binary-package":  # only count deb file
+    """
+    Updates the package download count in the database based on the provided CloudFront log entry.
+
+    Parameters:
+    conn (duckdb.DuckDBPyConnection): The connection to the DuckDB database.
+    log_entry (CloudFrontLogEntry): The CloudFront log entry containing information about the package download.
+
+    Returns:
+    None
+
+    Notes:
+    This function assumes that the database connection is already established and the stats table exists.
+    The function uses the _parse_deb_name function to extract the package name from the log entry's URI stem.
+    """
+    if log_entry.sc_content_type not in (
+        "application/vnd.debian.binary-package",
+        "binary/octet-stream",
+    ):  # only count deb file
         return
     if log_entry.sc_status is None or log_entry.sc_status >= 400:
         return

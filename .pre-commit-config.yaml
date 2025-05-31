@@ -12,6 +12,7 @@ repos:
       - id: check-case-conflict
       - id: check-merge-conflict
       - id: check-symlinks
+      - id: check-xml
       - id: check-yaml
       - id: debug-statements
       - id: end-of-file-fixer
@@ -19,12 +20,27 @@ repos:
       - id: mixed-line-ending
       - id: requirements-txt-fixer
       - id: trailing-whitespace
+      - id: check-illegal-windows-names
+      - id: check-docstring-first
+      - id: check-json
+      - id: detect-aws-credentials
+        args: ["--allow-missing-credentials"]
+      - id: detect-private-key
+      - id: check-toml
+      - id: destroyed-symlinks
 
   - repo: https://github.com/PyCQA/isort
     rev: 5.13.2
     hooks:
       - id: isort
-        args: ["-a", "from __future__ import annotations", "--profile", "black", "--filter-files"]
+        args:
+          [
+            "-a",
+            "from __future__ import annotations",
+            "--profile",
+            "black",
+            "--filter-files",
+          ]
 
   - repo: https://github.com/psf/black
     rev: 24.10.0
@@ -32,7 +48,7 @@ repos:
       - id: black
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.19.0
+    rev: v3.19.1
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
@@ -54,7 +70,7 @@ repos:
         args: ["--global-config=pyproject.toml"]
 
   - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.18
+    rev: 0.7.21
     hooks:
       - id: mdformat
         additional_dependencies:
@@ -62,7 +78,7 @@ repos:
           - mdformat-black
 
   - repo: https://github.com/hadialqattan/pycln
-    rev: v2.4.0
+    rev: v2.5.0
     hooks:
       - id: pycln
         args: [--config=pyproject.toml]
@@ -87,6 +103,7 @@ repos:
       - id: rst-backticks
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
+      - id: text-unicode-replacement-char
 
   - repo: https://github.com/mgedmin/check-manifest
     rev: "0.50"
@@ -95,28 +112,34 @@ repos:
         stages: [manual]
 
   - repo: https://github.com/pycqa/pylint
-    rev: v3.3.1
+    rev: v3.3.3
     hooks:
       - id: pylint
         #args: ["--toml=pyproject.toml"]
         files: src
-        additional_dependencies: ["requests", "PyYAML", "duckdb"]
+        additional_dependencies: ["requests", "PyYAML", "duckdb", "maxminddb"]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.7.2
+    rev: v0.9.1
     hooks:
       # Run the linter.
       - id: ruff
         args: ["src"]
-        types_or: [ python, pyi ]
+        types_or: [python, pyi]
       # Run the formatter.
       - id: ruff-format
-        types_or: [ python, pyi ]
+        types_or: [python, pyi]
 
-  - repo: https://github.com/tcort/markdown-link-check
-    rev: v3.13.6
+  # - repo: https://github.com/tcort/markdown-link-check
+  # # pin to v3.12.2
+  #   rev: v3.12.2
+  #   hooks:
+  #     - id: markdown-link-check
+  #       args: ["-q"]
+  #       types: [file, markdown, text]
+  #       files: \.md$
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
     hooks:
-      - id: markdown-link-check
-        args: ["-v"]
-        #types: [file, markdown, text]
-        #files: \.md$
+      - id: shellcheck

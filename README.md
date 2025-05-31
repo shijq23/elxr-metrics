@@ -14,7 +14,7 @@
 
 ## Description
 
-The eLxr Metrics project is designed to provide insights into the website performance and package distribution metrics. It tracks key indicators such as website view count and download statistics for binary packages, presenting the data in visually informative charts. The dashboard allows administrators to monitor website traffic and package popularity, ensuring effective tracking and optimization of resource delivery. For further design details, user can go to [High-Level Design Document for eLxr Metrics Collection](./hld.md).
+The eLxr Metrics project is designed to provide insights into the website performance and package distribution metrics. It tracks key indicators such as website view count and download statistics for binary packages from Amazon CloudFront Standard logging, presenting the data in visually informative charts. The dashboard allows administrators to monitor website traffic and package popularity, ensuring effective tracking and optimization of resource delivery. For further design details, user can go to [High-Level Design Document for eLxr Metrics Collection](./hld.md).
 
 ## Getting started
 
@@ -38,17 +38,45 @@ elxr-metrics logs/mirror_elxr_dev/ public/package_stats.csv package_download
 elxr-metrics logs/downloads_elxr_dev/ public/image_stats.csv image_download
 elxr-metrics log_path=logs/elxr_org/ csv_path=public/elxr_org_view.csv log_type=elxr_org_view
 elxr-metrics log_path=logs/mirror_elxr_dev/ csv_path=public/package_stats.csv log_type=package_download
-elxr-metrics log_path=logs/downloads_elxr_dev/ csv_path=public/image_stats.csv image_download
+elxr-metrics log_path=logs/downloads_elxr_dev/ csv_path=public/image_stats.csv log_type=image_download
 ```
 
 After execution, the csv file should be refreshed with the new metrics data from log files. User can open the [index.html](./public/index.html) in a browser to verify the metrics.
 
+## Tests
+
+The project contains unit tests. To execute these tests, use the following commands in the virtual environment:
+
+```bash
+pytest tests
+```
+
+## Visual Studio Code Dev Containers
+
+This project provides a dev container as a full-featured development environment. Please follow guides on [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers) to creat and connect to a dev container.
+
 ## Deployment
 
-The latest metrics page can be accessible via [GitLab Pages](https://elxr-metrics-d8932f.gitlab.io/) or [eLxr website](https://elxr.org/metrics/)
+The contents of [public](./public/) are updated, pushed to internet periodically.
+The latest metrics page can be accessible via [GitLab Pages](https://elxr-metrics-d8932f.gitlab.io/) or [eLxr website](https://elxr.org/metrics/).
+
+## API doc
+
+Follow steps in [docs README](./docs/README.md) to generate API doc.
+
+## Note
+
+- If this project is forked into personal namespace, the new project's `GitLab Pages` will be hosted on a different domain. In that case, please check your project's `Pages` settings to get the correct link.
+- For testing, this project provides a set of masked CouldFront standard log files under directory [tests/logs](./tests/logs/).
 
 ## Reference
 
 - [Python Package Template](https://github.com/microsoft/python-package-template)
 - [aws-log-parser](https://github.com/dpetzold/aws-log-parser/)
 - [Chart.js](https://www.chartjs.org/)
+- [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers)
+- [DuckDB](https://duckdb.org/)
+- [GeoLite2 Data](https://www.maxmind.com)
+- [Countries Dataset](https://developers.google.com/public-data/docs/canonical/countries_csv)
+- [Country Codes](https://www.geonames.org/countries/)
+- [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/)
